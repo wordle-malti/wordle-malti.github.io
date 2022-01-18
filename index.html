@@ -16,6 +16,9 @@
 
 <style>
 
+a {
+	color: lightblue;
+}
 html{
 	background: black;
 	color: white;
@@ -138,7 +141,7 @@ td.green {
 		Swal.fire({
 			title: "Wordle bil-Malti",
 			showCancelButton: false,
-			text: "Ir-Regoli l-istess bħal ta' wordle l-oriġinali. Nomi biss (plural u singular). Għandek 6 attentati. Kliem meħuda minn https://mlrs.research.um.edu.mt/resources/gabra/",
+			html: "Għandek 6 attentati biex taqta' l-kelma, li dejjem tkun nom (plural jew singular) ta' ħames ittri.<br> > Jekk taqta' ittra fil-post it-tajjeb, tiġi ħadra.<br> > Jekk taqta' ittra imma mhux f'postha, tiġi oranġjo.<br> > Jekk l-ebda', tibqa' griża.<br> Kliem meħuda minn <a href='https://mlrs.research.um.edu.mt/resources/gabra/' > Ġabra </a>",
 			confirmButtonText: "Tajjeb",
 			}).then((result) => {
 			/* Read more about isConfirmed, isDenied below */
@@ -186,21 +189,94 @@ td.green {
       	
       	console.log($scope.guess_matrix)
 
-      	$scope.getClass = function(cr, ind){
-      		let cl = ""
-      		if(cr.length == 0) return ""
-      		if(chosen_w.includes(cr)){
-				cl = "orange"
-				$scope.mid_letters.push(cr)
-			} 
-      		if(chosen_w[ind] == cr){
-				cl = "green"
-				$scope.good_letters.push(cr)
-			} 
+		$scope.getClassForRow = function(row){
+			let guess = $scope.guess_matrix[row]
+
+			let res = []
+
+			let letters = {}
+			for(let i = 0; i < chosen_w.length; i ++){
+				res.push("")
+
+				let c = chosen_w[i]
+
+				if(!(c in letters)) letters[c] = 1
+				else letters[c] += 1
+			}
+
+			// remove the greens
+			for(let i = 0; i < guess.length; i ++){
+				if(guess[i] == chosen_w[i]){
+					res[i] = "green"
+					letters[guess[i]] -= 1
+					$scope.good_letters.push(guess[i])
+
+				}
+			}
+
+			// do the oranges
+			for(let i = 0; i < guess.length; i ++){
+				gl = guess[i]
+				if(gl in letters && letters[gl] > 0){
+					letters[gl] -= 1
+
+					res[i] = "orange"
+					$scope.mid_letters.push(gl)
+
+				}
+			}
+
+			// add the bad ones to the keyboard
+			for(let i = 0; i < guess.length; i ++){
+				let gl = guess[i]
+				if(!chosen_w.includes(gl)) $scope.bad_letters.push(gl)
+			}
+
+			return res
+		}
+
+      	// $scope.getClass = function(cr, ind, t_guess){
+		// 	  console.log(t_guess, 't_guess')
+      	// 	let cl = ""
+      	// 	if(cr.length == 0) return ""
+
+      	// 	if(chosen_w[ind] == cr){
+		// 		cl = "green"
+		// 		$scope.good_letters.push(cr)
+		// 	} 
+
+		// 	let diff = []
+		// 	let new_ind = ind;
+		// 	for(let i = 0; i < t_guess.length; i ++){
+		// 		console.log(t_guess[i], cr, chosen_w[i])
+		// 		if(!(t_guess[i] == cr && t_guess[i] == chosen_w[i])) {
+		// 			diff.push(chosen_w[i])
+		// 		}
+		// 	}
+
+		// 	let before_C  = 0
+		// 	let total_C = 0
+		// 	// count remaining occurences
+		// 	for(let i = 0; i < diff.length; i ++){
+		// 		if(diff[i] == cr){
+		// 			if(i < ind) before_C ++
+		// 			total_C ++
+		// 		}
+		// 	}
+
+		// 	if(total_C-before_C)
+
+		// 	console.log(diff , 'diff')
+
+		// 	if(diff.includes(cr)){
+		// 		console.log(diff, cr, diff.includes(cr))
+		// 		cl = "orange"
+		// 		$scope.mid_letters.push(cr)
+		// 	}
 			
-			if(cl == "")  $scope.bad_letters.push(cr)
-      		return cl
-      	}
+		// 	if(cl == "")  $scope.bad_letters.push(cr)
+      	// 	return cl
+      	// }
 
 		let checkIfWordExists = function(word){
 
@@ -392,18 +468,10 @@ td.green {
 
 	<div  ng-app="ChangeLogApp" ng-controller="ChangeLogController">
 		<div class='holder'>
-<!-- 
-			<button ng-click="pushLetter('ġ')"> ġ </button>
-			<button ng-click="pushLetter('/')"> għ </button>
-			<button ng-click="pushLetter('ħ')"> ħ </button>
-			<button ng-click="pushLetter('ż')"> ż </button>
-			<button ng-click="pushLetter('ċ')"> ċ </button>
-			<button ng-click="pushLetter('?')"> ie </button> -->
-
 			<div> 
 				<table id= "inp_table" align="center">
 					<tr ng-repeat="guess in guess_matrix">
-						<td ng-repeat="char in guess track by $index" class="{{getClass(char[0], $index)}}">
+						<td ng-repeat="char in guess track by $index" class="{{getClassForRow($parent.$index)[$index]}}">
 							{{renderLetter(char[0])}}
 						</td>
 					</tr>
