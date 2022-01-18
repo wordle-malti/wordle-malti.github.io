@@ -120,15 +120,12 @@ td.green {
 		
 		let restart = function(seeded){
 
-			console.log('Restarting: ', seeded)
-
 			if(seeded){
 				w_i = Math.floor(vocab.length * mulberry32(day_of_year())())
 			}else
 				w_i = Math.floor(vocab.length * Math.random())
 			chosen_w = vocab[w_i]
 			$scope.current_guess = []
-			console.log(chosen_w)
 			$scope.guess_matrix = []
 			window.chosen_w = chosen_w;
 			$scope.active = true
@@ -161,10 +158,6 @@ td.green {
 			})
 		})
 
-		
-
-		console.log(chosen_w)
-
 		$scope.top_row = ['q','w','e','r','t','u','i','?','o','p']
 		$scope.mid_row = ['a','s','d','f','g','ħ','h','/', 'j', 'k', 'l']
 		$scope.bot_row = ['⏎', 'z','ż','x','ċ','v','ġ','b','n','m', '⌫']
@@ -185,9 +178,6 @@ td.green {
 		    return clue
 		   
 		}
-
-      	
-      	console.log($scope.guess_matrix)
 
 		$scope.getClassForRow = function(row){
 			let guess = $scope.guess_matrix[row]
@@ -235,49 +225,6 @@ td.green {
 			return res
 		}
 
-      	// $scope.getClass = function(cr, ind, t_guess){
-		// 	  console.log(t_guess, 't_guess')
-      	// 	let cl = ""
-      	// 	if(cr.length == 0) return ""
-
-      	// 	if(chosen_w[ind] == cr){
-		// 		cl = "green"
-		// 		$scope.good_letters.push(cr)
-		// 	} 
-
-		// 	let diff = []
-		// 	let new_ind = ind;
-		// 	for(let i = 0; i < t_guess.length; i ++){
-		// 		console.log(t_guess[i], cr, chosen_w[i])
-		// 		if(!(t_guess[i] == cr && t_guess[i] == chosen_w[i])) {
-		// 			diff.push(chosen_w[i])
-		// 		}
-		// 	}
-
-		// 	let before_C  = 0
-		// 	let total_C = 0
-		// 	// count remaining occurences
-		// 	for(let i = 0; i < diff.length; i ++){
-		// 		if(diff[i] == cr){
-		// 			if(i < ind) before_C ++
-		// 			total_C ++
-		// 		}
-		// 	}
-
-		// 	if(total_C-before_C)
-
-		// 	console.log(diff , 'diff')
-
-		// 	if(diff.includes(cr)){
-		// 		console.log(diff, cr, diff.includes(cr))
-		// 		cl = "orange"
-		// 		$scope.mid_letters.push(cr)
-		// 	}
-			
-		// 	if(cl == "")  $scope.bad_letters.push(cr)
-      	// 	return cl
-      	// }
-
 		let checkIfWordExists = function(word){
 
 		}
@@ -287,12 +234,10 @@ td.green {
       			$scope.current_guess.pop()
       		}else if(code == 13){
       			if($scope.current_guess.length != 5) return
-				  console.log('checking ', st)
 				  $http({
 					method: 'GET',
 					url: 'https://mlrs.research.um.edu.mt/resources/gabra-api/lexemes/search?s='+word_to_real($scope.current_guess.join(""))
 				}).then(function successCallback(response) {
-					console.log(response)
 					exists = response.data.results.length > 0
 					
 					if(!exists){
@@ -311,14 +256,10 @@ td.green {
 						if($scope.current_guess.join("") == chosen_w){
 							$scope.active = false
 
-							console.log('irbaht')
-							console.log( $scope.getWordDefinition(chosen_w, true), )
-
-							
-							console.log()
+							$scope.getWordDefinition(chosen_w, true)
 						}else if($scope.guess_matrix.length == 6){
 							$scope.active = false
-							console.log( $scope.getWordDefinition(chosen_w, false), )
+							$scope.getWordDefinition(chosen_w, false)
 
 						}
 						
@@ -364,9 +305,7 @@ td.green {
 				method: 'GET',
 				url: 'https://mlrs.research.um.edu.mt/resources/gabra-api/lexemes/search?s='+word_to_real(word)
 			}).then(function successCallback(response) {
-				console.log(response)
 				resp = response.data.results[0].lexeme.glosses[0].gloss.trim()
-				console.log(resp)
 				Swal.fire({
 					title: managed ? 'Proset!' : "Ma qtajtx! '" + word_to_real(word) + "' kienet.",
 					text: word_to_real(word) + ' bl-Ingliż tiġi \'' + resp + '\'',
