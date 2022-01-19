@@ -115,7 +115,7 @@ td.green {
 		let chosen_w = null
 		$scope.current_guess = []
 		$scope.guess_matrix = []
-		window.chosen_w = null;
+		
 		$scope.active = false
 		
 		let restart = function(seeded){
@@ -127,7 +127,7 @@ td.green {
 			chosen_w = vocab[w_i]
 			$scope.current_guess = []
 			$scope.guess_matrix = []
-			window.chosen_w = chosen_w;
+			
 			$scope.active = true
 			$scope.bad_letters = []
 			$scope.mid_letters = []
