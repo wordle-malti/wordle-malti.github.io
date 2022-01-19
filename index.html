@@ -208,11 +208,12 @@ td.green {
 			for(let i = 0; i < guess.length; i ++){
 				gl = guess[i]
 				if(gl in letters && letters[gl] > 0){
-					letters[gl] -= 1
 
-					res[i] = "orange"
-					$scope.mid_letters.push(gl)
-
+					if(res[i] != 'green'){
+						letters[gl] -= 1
+						res[i] = "orange"
+						$scope.mid_letters.push(gl)
+					}	
 				}
 			}
 
