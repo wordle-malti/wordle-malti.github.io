@@ -225,6 +225,32 @@ td.green {
 
 			return res
 		}
+		
+		let get_emoji_string = function(){
+				let emoji_string = ''
+				let score = 0
+
+				for(let i = 0; i < $scope.guess_matrix.length; i++){
+
+						score += 1
+						split_word = $scope.getClassForRow(i).toString().split(',')
+						console.log("AA" + split_word)
+
+						for(color in split_word){
+								console.log("CURRENT COLOR: " + split_word[color])
+							if (split_word[color]== 'orange'){
+									emoji_string += '🟧'
+							} else if (split_word[color]== 'green'){
+								emoji_string += '🟩'
+							} else {
+								emoji_string += '⬜'
+							}
+						}
+								emoji_string += '\n'
+				}
+				return 'Werdil ' + score + '/6, \n ' + emoji_string
+		}
+		
 
 		let checkIfWordExists = function(word){
 
@@ -311,12 +337,17 @@ td.green {
 					title: managed ? 'Proset!' : "Ma qtajtx! '" + word_to_real(word) + "' kienet.",
 					text: word_to_real(word) + ' bl-Ingliż tiġi \'' + resp + '\'',
 					icon: 'info',
+					denyButtonText:'Share',
+					showDenyButton: true,
 					confirmButtonText: 'Pprova kelma ohra'
 				}).then((result) => {
 				/* Read more about isConfirmed, isDenied below */
 					if (result.isConfirmed) {
 						restart(false)
-					} 
+					}  else{
+							get_emoji_string()
+						navigator.clipboard.writeText(get_emoji_string())
+					}
 				})
 				
 			}, function errorCallback(response) {
