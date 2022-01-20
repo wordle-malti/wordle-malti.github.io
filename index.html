@@ -243,12 +243,12 @@ td.green {
 							} else if (split_word[color]== 'green'){
 								emoji_string += '🟩'
 							} else {
-								emoji_string += '⬜'
+								emoji_string += '⬛'
 							}
 						}
 								emoji_string += '\n'
 				}
-				return 'Werdil ' + score + '/6, \n ' + emoji_string
+				return 'Werdil ' + score + '/6\n' + emoji_string
 		}
 		
 
@@ -337,7 +337,7 @@ td.green {
 					title: managed ? 'Proset!' : "Ma qtajtx! '" + word_to_real(word) + "' kienet.",
 					text: word_to_real(word) + ' bl-Ingliż tiġi \'' + resp + '\'',
 					icon: 'info',
-					denyButtonText:'Share',
+					denyButtonText:'Aqsam ir-riżultat',
 					showDenyButton: true,
 					confirmButtonText: 'Pprova kelma ohra'
 				}).then((result) => {
