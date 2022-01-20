@@ -43,28 +43,37 @@ button.good {
 }
 
 button {
-	background-color: rgb(80, 80, 80);
+	background-color: rgb(122, 122, 122);
+	border-color: rgb(215, 218, 220);
 	color: white;
 	font-family: monospace;
-	border-radius: 20%;
-	font-weight: bolder;
+	font-weight: 700;
+	border-radius: 4px;
+	border-width: 0px;
+	/* font-weight: bolder; */
 	font-size: 4vw;
 	flex:1;
 	padding:0px;
+	margin: 3px;
 }
 
 .row{
-	width: 95%;
+	width: 100%;
     display: inline-flex;
     height: 10vh;
     align-content: stretch;
     justify-content: space-around;
 }
 
+/* Make middle row indented from both sides */
+.middle-row{
+	width: 95%;
+}
+
 #keyboard{
-    bottom: 0;
+    bottom: 1vh;
     text-align: center;
-    width: 96%;
+    width: 98.1%;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -72,7 +81,9 @@ button {
     justify-content: space-between;
     flex-wrap: nowrap;
     align-items: center;
+	margin: 0 auto;
 }
+
 
 td {
 	font-size: 6vh;
@@ -146,7 +157,7 @@ td.green {
 					title: "Trid tilgħab il-kelma ta' illum, jew kelma li tkun?",
 					showDenyButton: true,
 					showCancelButton: false,
-					confirmButtonText: "Tal-lum",
+					confirmButtonText: "Ta' Illum",
 					denyButtonText: `Li Tkun`,
 				}).then((result) => {
 				/* Read more about isConfirmed, isDenied below */
@@ -158,9 +169,9 @@ td.green {
 			})
 		})
 
-		$scope.top_row = ['q','w','e','r','t','u','i','?','o','p']
-		$scope.mid_row = ['a','s','d','f','g','ħ','h','/', 'j', 'k', 'l']
-		$scope.bot_row = ['⏎', 'z','ż','x','ċ','v','ġ','b','n','m', '⌫']
+		$scope.top_row = ['Q','W','E','R','T','U','I','?','O','P']
+		$scope.mid_row = ['A','S','D','F','G','Ħ','H','/', 'J', 'K', 'L']
+		$scope.bot_row = ['⏎', 'Z','Ż','X','Ċ','V','Ġ','B','N','M', '⌫']
 		$scope.bad_letters = []
 		$scope.mid_letters = []
 		$scope.good_letters = []
@@ -225,32 +236,6 @@ td.green {
 
 			return res
 		}
-		
-		let get_emoji_string = function(){
-				let emoji_string = ''
-				let score = 0
-
-				for(let i = 0; i < $scope.guess_matrix.length; i++){
-
-						score += 1
-						split_word = $scope.getClassForRow(i).toString().split(',')
-						console.log("AA" + split_word)
-
-						for(color in split_word){
-								console.log("CURRENT COLOR: " + split_word[color])
-							if (split_word[color]== 'orange'){
-									emoji_string += '🟧'
-							} else if (split_word[color]== 'green'){
-								emoji_string += '🟩'
-							} else {
-								emoji_string += '⬛'
-							}
-						}
-								emoji_string += '\n'
-				}
-				return ' Werdil ' + score + '/6\n' + emoji_string
-		}
-		
 
 		let checkIfWordExists = function(word){
 
@@ -306,7 +291,7 @@ td.green {
 
 
 		let word_to_real = function(word){
-			return word.replace("?", "ie").replace("/", "għ")
+			return word.replace("?", "IE").replace("/", "GĦ")
 		}
 
 		let day_of_year = function(){
@@ -337,17 +322,12 @@ td.green {
 					title: managed ? 'Proset!' : "Ma qtajtx! '" + word_to_real(word) + "' kienet.",
 					text: word_to_real(word) + ' bl-Ingliż tiġi \'' + resp + '\'',
 					icon: 'info',
-					denyButtonText:'Aqsam ir-riżultat',
-					showDenyButton: true,
 					confirmButtonText: 'Pprova kelma ohra'
 				}).then((result) => {
 				/* Read more about isConfirmed, isDenied below */
 					if (result.isConfirmed) {
 						restart(false)
-					}  else{
-							get_emoji_string()
-						navigator.clipboard.writeText(get_emoji_string())
-					}
+					} 
 				})
 				
 			}, function errorCallback(response) {
@@ -420,8 +400,8 @@ td.green {
 
 
 		$scope.renderLetter = function(lt){
-			if(lt == '/') return 'għ'
-			else if(lt == '?') return 'ie'
+			if(lt == '/') return 'GĦ'
+			else if(lt == '?') return 'IE'
 			else return lt
 		}
 
@@ -461,7 +441,7 @@ td.green {
 					<button ng-repeat="letter in top_row" ng-click="pushLetter(letter)" class="{{keyb_colour(letter)}}"> {{renderLetter(letter)}} </button>
 				</div>
 
-				<div class='row'>
+				<div class='row middle-row'>
 					<button ng-repeat="letter in mid_row" ng-click="pushLetter(letter)" class="{{keyb_colour(letter)}}"> {{renderLetter(letter)}} </button>
 				</div>
 
