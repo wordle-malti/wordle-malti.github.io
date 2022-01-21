@@ -71,9 +71,9 @@ button {
 }
 
 #keyboard{
-    bottom: 1vh;
+    bottom: 0;
+    padding: 1vh;
     text-align: center;
-    width: 98.1%;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -81,9 +81,11 @@ button {
     justify-content: space-between;
     flex-wrap: nowrap;
     align-items: center;
-	margin: 0 auto;
+	margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
 }
-
 
 td {
 	font-size: 6vh;
@@ -157,7 +159,7 @@ td.green {
 					title: "Trid tilgħab il-kelma ta' illum, jew kelma li tkun?",
 					showDenyButton: true,
 					showCancelButton: false,
-					confirmButtonText: "Ta' Illum",
+					confirmButtonText: "Tal-lum",
 					denyButtonText: `Li Tkun`,
 				}).then((result) => {
 				/* Read more about isConfirmed, isDenied below */
@@ -236,6 +238,32 @@ td.green {
 
 			return res
 		}
+		
+		let get_emoji_string = function(){
+				let emoji_string = ''
+				let score = 0
+
+				for(let i = 0; i < $scope.guess_matrix.length; i++){
+
+						score += 1
+						split_word = $scope.getClassForRow(i).toString().split(',')
+						console.log("AA" + split_word)
+
+						for(color in split_word){
+								console.log("CURRENT COLOR: " + split_word[color])
+							if (split_word[color]== 'orange'){
+									emoji_string += '🟧'
+							} else if (split_word[color]== 'green'){
+								emoji_string += '🟩'
+							} else {
+								emoji_string += '⬛'
+							}
+						}
+								emoji_string += '\n'
+				}
+				return ' Werdil ' + score + '/6\n' + emoji_string
+		}
+		
 
 		let checkIfWordExists = function(word){
 
@@ -291,7 +319,7 @@ td.green {
 
 
 		let word_to_real = function(word){
-			return word.replace("?", "IE").replace("/", "GĦ")
+			return word.replace("?", "ie").replace("/", "għ")
 		}
 
 		let day_of_year = function(){
@@ -322,12 +350,17 @@ td.green {
 					title: managed ? 'Proset!' : "Ma qtajtx! '" + word_to_real(word) + "' kienet.",
 					text: word_to_real(word) + ' bl-Ingliż tiġi \'' + resp + '\'',
 					icon: 'info',
+					denyButtonText:'Aqsam ir-riżultat',
+					showDenyButton: true,
 					confirmButtonText: 'Pprova kelma ohra'
 				}).then((result) => {
 				/* Read more about isConfirmed, isDenied below */
 					if (result.isConfirmed) {
 						restart(false)
-					} 
+					}  else{
+							get_emoji_string()
+						navigator.clipboard.writeText(get_emoji_string())
+					}
 				})
 				
 			}, function errorCallback(response) {
