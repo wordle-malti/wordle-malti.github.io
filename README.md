@@ -7,7 +7,8 @@ Tista' taċċessa l-logħba hawn: https://wordle-malti.github.io/
 Magħmulha minn Michael Pulis (https://github.com/michaelpulis)
 
 Kontribuzzjonijiet Oħrajn:
-+ Liam Attard (https://github.com/liamattard): Share Feature
++ Liam Attard (https://github.com/liamattard): 'Share' Feature
++ Sean Diacono (https://github.com/seandiacono): Updated CSS
 + David Schembri (http://davidschembri.com): Grammatika
 
 ***
