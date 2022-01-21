@@ -87,12 +87,17 @@ button {
     right: 0;
 }
 
+table{
+	table-layout: fixed;
+}
+
 td {
 	font-size: 6vh;
+	font-weight: 700;
 	color: white;
 	text-align: center;
-	background-color: darkgray;
-
+	width: 2em;
+	background-color: rgb(122, 122, 122);
 }
 
 td.keyboard_bg.ng-scope{
@@ -435,7 +440,7 @@ td.green {
 		$scope.renderLetter = function(lt){
 			if(lt == '/') return 'GĦ'
 			else if(lt == '?') return 'IE'
-			else return lt
+			else return lt.toUpperCase()
 		}
 
 		$scope.keyb_colour = function(lr){
@@ -471,15 +476,15 @@ td.green {
 
 			<div id = 'keyboard'>
 				<div class='row'>
-					<button ng-repeat="letter in top_row" ng-click="pushLetter(letter)" class="{{keyb_colour(letter)}}"> {{renderLetter(letter)}} </button>
+					<button ng-repeat="letter in top_row" ng-click="pushLetter(letter.toLowerCase())" class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
 				</div>
 
 				<div class='row middle-row'>
-					<button ng-repeat="letter in mid_row" ng-click="pushLetter(letter)" class="{{keyb_colour(letter)}}"> {{renderLetter(letter)}} </button>
+					<button ng-repeat="letter in mid_row" ng-click="pushLetter(letter.toLowerCase())" class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
 				</div>
 
 				<div class='row'>
-					<button ng-repeat="letter in bot_row" ng-click="pushLetter(letter)" class="{{keyb_colour(letter)}}"> {{renderLetter(letter)}} </button>
+					<button ng-repeat="letter in bot_row" ng-click="pushLetter(letter.toLowerCase())" class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
 				</div>
 			</div>
 		</div>
