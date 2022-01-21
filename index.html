@@ -43,28 +43,37 @@ button.good {
 }
 
 button {
-	background-color: rgb(80, 80, 80);
+	background-color: rgb(122, 122, 122);
+	border-color: rgb(215, 218, 220);
 	color: white;
 	font-family: monospace;
-	border-radius: 20%;
-	font-weight: bolder;
+	font-weight: 700;
+	border-radius: 4px;
+	border-width: 0px;
+	/* font-weight: bolder; */
 	font-size: 4vw;
 	flex:1;
 	padding:0px;
+	margin: 3px;
 }
 
 .row{
-	width: 95%;
+	width: 100%;
     display: inline-flex;
     height: 10vh;
     align-content: stretch;
     justify-content: space-around;
 }
 
+/* Make middle row indented from both sides */
+.middle-row{
+	width: 95%;
+}
+
 #keyboard{
     bottom: 0;
+    padding: 1vh;
     text-align: center;
-    width: 96%;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -72,14 +81,23 @@ button {
     justify-content: space-between;
     flex-wrap: nowrap;
     align-items: center;
+	margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+table{
+	table-layout: fixed;
 }
 
 td {
 	font-size: 6vh;
+	font-weight: 700;
 	color: white;
 	text-align: center;
-	background-color: darkgray;
-
+	width: 2em;
+	background-color: rgb(122, 122, 122);
 }
 
 td.keyboard_bg.ng-scope{
@@ -158,9 +176,9 @@ td.green {
 			})
 		})
 
-		$scope.top_row = ['q','w','e','r','t','u','i','?','o','p']
-		$scope.mid_row = ['a','s','d','f','g','ħ','h','/', 'j', 'k', 'l']
-		$scope.bot_row = ['⏎', 'z','ż','x','ċ','v','ġ','b','n','m', '⌫']
+		$scope.top_row = ['Q','W','E','R','T','U','I','?','O','P']
+		$scope.mid_row = ['A','S','D','F','G','Ħ','H','/', 'J', 'K', 'L']
+		$scope.bot_row = ['⏎', 'Z','Ż','X','Ċ','V','Ġ','B','N','M', '⌫']
 		$scope.bad_letters = []
 		$scope.mid_letters = []
 		$scope.good_letters = []
@@ -420,9 +438,9 @@ td.green {
 
 
 		$scope.renderLetter = function(lt){
-			if(lt == '/') return 'għ'
-			else if(lt == '?') return 'ie'
-			else return lt
+			if(lt == '/') return 'GĦ'
+			else if(lt == '?') return 'IE'
+			else return lt.toUpperCase()
 		}
 
 		$scope.keyb_colour = function(lr){
@@ -458,15 +476,15 @@ td.green {
 
 			<div id = 'keyboard'>
 				<div class='row'>
-					<button ng-repeat="letter in top_row" ng-click="pushLetter(letter)" class="{{keyb_colour(letter)}}"> {{renderLetter(letter)}} </button>
+					<button ng-repeat="letter in top_row" ng-click="pushLetter(letter.toLowerCase())" class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
+				</div>
+
+				<div class='row middle-row'>
+					<button ng-repeat="letter in mid_row" ng-click="pushLetter(letter.toLowerCase())" class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
 				</div>
 
 				<div class='row'>
-					<button ng-repeat="letter in mid_row" ng-click="pushLetter(letter)" class="{{keyb_colour(letter)}}"> {{renderLetter(letter)}} </button>
-				</div>
-
-				<div class='row'>
-					<button ng-repeat="letter in bot_row" ng-click="pushLetter(letter)" class="{{keyb_colour(letter)}}"> {{renderLetter(letter)}} </button>
+					<button ng-repeat="letter in bot_row" ng-click="pushLetter(letter.toLowerCase())" class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
 				</div>
 			</div>
 		</div>
