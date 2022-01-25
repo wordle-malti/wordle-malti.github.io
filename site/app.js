@@ -206,7 +206,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
                 icon: 'info',
                 denyButtonText: 'Aqsam ir-riżultat',
                 showDenyButton: true,
-                confirmButtonText: 'Ipprova kelma ohra'
+                confirmButtonText: 'Ipprova kelma oħra'
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
