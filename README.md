@@ -34,3 +34,15 @@ Biex tiġġenera dizzjunarju ġdid:
     * Jekk qed tuża l-Windows biex tiġġenera dan il-file, sempliċiment eżegwixxi l-kmand ta' `docker` li ssib ġewwa [./refresh-dictionary.sh](./refresh-dictionary.sh).
 
 Dan il-proċess idum ftit minuti, u jirriżulta f'file ġdid jiġi ġġenerat: [site/dictionary.json](site/dictionary.json).
+
+***
+
+Il-Javascript file [site/app.js](site/app.js) qed jiġi mpurtat ġewwa [site/index.html](site/index.html) billi jinkludi ukoll `integrity hash`. Ir-raġuni primarja għalfejn din qegħda hemm hi biex iġġiegħel il-browser jerġa' jniżżel dan il-fajl u mhux juża l-_cache_. Hemm ukoll vantaġġi oħra relatati ma' security.
+
+Biex tiġġenera hash ġdid jekk [site/app.js](site/app.js) ikun inbidel, fuq sistema fejn għandek `bash` u `openssl`, agħmel:
+
+```bash
+openssl dgst -sha512 -binary app.js | openssl base64 -A
+```
+
+Ir-riżultat imbagħad poġġieh parti mill-`<script charset="UTF-8" src="app.js" integrity="sha512-[RIŻULTAT_HAWNEKK]"  crossorigin="anonymous" ></script>` _(innota l-prefiss `sha512-`)_.
