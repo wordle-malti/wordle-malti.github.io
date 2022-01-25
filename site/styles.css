@@ -1,0 +1,142 @@
+a {
+    color: lightblue;
+}
+
+html {
+    background: black;
+    color: white;
+    font-family: monospace;
+}
+
+.holder {
+    display: block;
+    text-align: center;
+}
+
+button.bad {
+    background: #222;
+}
+
+button.mid {
+    background: orange;
+}
+
+button.good {
+    background: green;
+}
+
+button {
+    background-color: rgb(122, 122, 122);
+    border-color: rgb(215, 218, 220);
+    color: white;
+    font-family: monospace;
+    font-weight: 700;
+    border-radius: 4px;
+    border-width: 0px;
+    /* font-weight: bolder; */
+    font-size: 4vw;
+    flex: 1;
+    padding: 0px;
+    margin: 3px;
+}
+
+.row {
+    width: 100%;
+    display: inline-flex;
+    height: 10vh;
+    align-content: stretch;
+    justify-content: space-around;
+}
+
+/* Make middle row indented from both sides */
+.middle-row {
+    width: 95%;
+}
+
+#keyboard {
+    bottom: 0;
+    padding: 1vh;
+    text-align: center;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+table {
+    table-layout: fixed;
+}
+
+td {
+    font-size: 6vh;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    width: 2em;
+    background-color: rgb(122, 122, 122);
+}
+
+td.keyboard_bg.ng-scope {
+    text-align: center;
+    background-color: black;
+}
+
+td.orange {
+    background: orange;
+}
+
+td.green {
+    background: green;
+}
+
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+  }
+  
+  #snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+
+  [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+  }
