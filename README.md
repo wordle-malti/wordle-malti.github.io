@@ -15,7 +15,7 @@ Idea meħuda direttament minn https://www.powerlanguage.co.uk/wordle/
 
 ***
 
-Tista' tħaddem il-logħoba lokalment billi tuża Docker u Docker Compose u tagħmel:
+Tista' tħaddem il-logħoba lokalment billi tuża `docker` u `docker-compose` u tagħmel:
 
 ```bash
 docker-compose up -d 
@@ -29,7 +29,7 @@ Biex tiġġenera dizzjunarju ġdid:
 
 > Għandu jkollok `docker` installat biex tuża dan.
 
-1. Iċċekkja li l-URL ġewwa [db/entrypoint.sh](db/entrypoint.sh) huwa ssettjat għal verżjoni li tixtieq tuża.
+1. Iċċekkja li l-URL ġewwa [db/entrypoint.sh](db/entrypoint.sh) huwa ssettjat għall-verżjoni li tixtieq tuża.
 2. Fuq sistema li tisapportja Bash (Mac / Linux), eżegwixxi: `./refresh-dictionary.sh`.
     * Jekk qed tuża l-Windows biex tiġġenera dan il-file, sempliċiment eżegwixxi l-kmand ta' `docker` li ssib ġewwa [./refresh-dictionary.sh](./refresh-dictionary.sh).
 
@@ -37,7 +37,7 @@ Dan il-proċess idum ftit minuti, u jirriżulta f'file ġdid jiġi ġġenerat: [
 
 ***
 
-Il-Javascript file [site/app.js](site/app.js) qed jiġi mpurtat ġewwa [site/index.html](site/index.html) billi jinkludi ukoll `integrity hash`. Ir-raġuni primarja għalfejn din qegħda hemm hi biex iġġiegħel il-browser jerġa' jniżżel dan il-fajl u mhux juża l-_cache_. Hemm ukoll vantaġġi oħra relatati ma' security.
+Il-Javascript file [site/app.js](site/app.js) qed jiġi mpurtat ġewwa [site/index.html](site/index.html) billi jinkludi ukoll `integrity hash`. Ir-raġuni primarja għalfejn din qegħda hemm hi biex iġġiegħel il-browser jerġa' jniżżel dan il-fajl u mhux juża l-_cache_ jekk il-verżjoni tinbidel (għax jekk tinbidel ikun hemm hash ġdid). Hemm ukoll vantaġġi oħra relatati ma' security.
 
 Biex tiġġenera hash ġdid jekk [site/app.js](site/app.js) ikun inbidel, fuq sistema fejn għandek `bash` u `openssl`, agħmel:
 

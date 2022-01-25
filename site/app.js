@@ -26,7 +26,6 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         $scope.bad_letters = []
         $scope.mid_letters = []
         $scope.good_letters = []
-        // $scope.$apply()
     }
 
     let startDialogue = function () {
@@ -162,7 +161,6 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
                 })
             }
         }
-        // $scope.$apply()
     }
 
     let word_to_real = function (word) {
@@ -253,7 +251,6 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         } else {
             $scope.handleRegular(st)
         }
-        // $scope.$apply()
     });
 
     document.addEventListener("keyup", function (event) {
