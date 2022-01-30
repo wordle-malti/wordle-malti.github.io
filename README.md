@@ -36,7 +36,7 @@ Biex tiġġenera dizzjunarju ġdid:
 2. Fuq sistema li tisapportja Bash (Mac / Linux), eżegwixxi: `./refresh-dictionary.sh`.
     * Jekk qed tuża l-Windows biex tiġġenera dan il-file, sempliċiment eżegwixxi l-kmand ta' `docker` li ssib ġewwa [./refresh-dictionary.sh](./refresh-dictionary.sh).
 
-Dan il-proċess idum ftit minuti, u jirriżulta f'file ġdid jiġi ġġenerat: [site/dictionary.json](site/dictionary.json).
+Dan il-proċess idum ftit minuti (3-5 minuti), u jirriżulta f'file ġdid jiġi ġġenerat: [site/dictionary.json](site/dictionary.json). Minkejja li l-files li qed jiġu pproċessati huma akbar minn 1GB+, dan il-proċess juża biss madwar 35MB RAM, għax il-files qed jiġu streamed. Biex dan ikun effiċjenti, qed jintuża l-prinċipju ta' `jsonlines`. Finalment id-dizzjunarju prodott bħala riżultat, hu kbir biss ~30KB.
 
 ***
 

@@ -12,6 +12,11 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
 
     $scope.active = false
 
+    let reapply = function() {
+        $scope.$apply()
+        // ignore - todo - can this be cleaned up?
+    }
+
     let restart = function (seeded) {
         if (seeded) {
             w_i = Math.floor($scope.vocab.length * mulberry32(day_of_year())())
@@ -26,6 +31,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         $scope.bad_letters = []
         $scope.mid_letters = []
         $scope.good_letters = []
+        reapply()
     }
 
     let startDialogue = function () {
@@ -139,8 +145,8 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         } else if (code == 13) {
             if ($scope.current_guess.length != 5) return
 
-            real_word = word_to_real($scope.current_guess.join(""))
-            word_exists = real_word == $scope.expected_result || $scope.dict.indexOf(real_word) > -1
+            inputted_word = $scope.current_guess.join("")
+            word_exists = inputted_word == $scope.expected_result || $scope.dict.indexOf(inputted_word) > -1
 
             if (word_exists) {
                 $scope.guess_matrix.push([...$scope.current_guess])
@@ -161,6 +167,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
                 })
             }
         }
+        reapply()
     }
 
     let word_to_real = function (word) {
@@ -251,6 +258,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         } else {
             $scope.handleRegular(st)
         }
+        reapply()
     });
 
     document.addEventListener("keyup", function (event) {
