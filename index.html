@@ -1,0 +1,495 @@
+<html>
+	<head>
+	<title>Werdil</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta name="viewport" content="user-scalable=no"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> -->
+	</head>
+<div class = 'holder'>
+<h1> Werdil </button></h1>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+
+<style>
+
+a {
+	color: lightblue;
+}
+html{
+	background: black;
+	color: white;
+	font-family: monospace;
+}
+
+.holder {
+    display: block;
+    text-align: center;
+}
+
+button.bad {
+    background: red;
+}
+
+button.mid {
+    background: orange;
+}
+
+button.good {
+    background: green;
+}
+
+button {
+	background-color: rgb(122, 122, 122);
+	border-color: rgb(215, 218, 220);
+	color: white;
+	font-family: monospace;
+	font-weight: 700;
+	border-radius: 4px;
+	border-width: 0px;
+	/* font-weight: bolder; */
+	font-size: 4vw;
+	flex:1;
+	padding:0px;
+	margin: 3px;
+}
+
+.row{
+	width: 100%;
+    display: inline-flex;
+    height: 10vh;
+    align-content: stretch;
+    justify-content: space-around;
+}
+
+/* Make middle row indented from both sides */
+.middle-row{
+	width: 95%;
+}
+
+#keyboard{
+    bottom: 0;
+    padding: 1vh;
+    text-align: center;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+	margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+table{
+	table-layout: fixed;
+}
+
+td {
+	font-size: 6vh;
+	font-weight: 700;
+	color: white;
+	text-align: center;
+	width: 2em;
+	background-color: rgb(122, 122, 122);
+}
+
+td.keyboard_bg.ng-scope{
+	text-align: center;
+	background-color: black;
+}
+
+td.orange {
+    background: orange;
+}
+
+td.green {
+    background: green;
+}
+</style>
+<!-- <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" />
+<!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.6/sweetalert2.min.js" ></script>
+
+<script>
+	let vocab = ["skrun", "sen/a", "teb/a", "btala", "bxara", "froġa", "ftira", "fw?ħa", "gżira", "ħl?qa", "ħrafa", "kċina", "nt?na", "rokna", "skola", "skuna", "spiża", "xkora", "xmara", "żjara", "biċċa", "ħaxix", "mejda", "ċerva", "ċorma", "darsa", "ġidra", "ġilda", "ħabba", "keffa", "kelba", "kelma", "komma", "libsa", "lb?si", "qaħbu", "qalba", "qoffa", "qoxra", "sinna", "tajra", "tomna", "fenek", "fenka", "ħaruf", "ħodon", "raġel", "erw?ħ", "s?ħeb", "s?ħba", "sined", "tifel", "xifer", "banda", "bnadi", "bidwi", "bd?wa", "bitħa", "bt?ħi", "ċm?ni", "darba", "drabi", "fs?qi", "kitla", "kt?li", "lj?li", "ls?ra", "lt?ma", "niżla", "nż?li", "qsari", "qorti", "qrati", "sd?ri", "trabi", "terħa", "tr?ħi", "xatba", "xt?bi", "xewka", "xw?ki", "xibka", "xb?ki", "xitwa", "xt?wi", "zalza", "zlazi", "b?qja", "bw?qi", "dmija", "ġmula", "ġr?wi", "ħabel", "ħbula", "ħanek", "qabar", "qbura", "qamar", "qmura", "qarib", "qraba", "raħal", "rħula", "swali", "sn?di", "tw?qi", "dabra", "dawra", "demla", "difer", "fawra", "ħanut", "kamra", "r?fnu", "salib", "taġen", "tapit", "tavla", "tebut", "xabla", "xafra", "xerqa", "xitan", "ż?mel", "ġonna", "kotba", "mirja", "saqaf", "soqfa", "tabib", "tobba", "bhima", "armel", "armla", "romol", "balla", "balal", "baned", "banka", "banek", "baqra", "baqar", "berġa", "bereġ", "birra", "birer", "boċċa", "boċoċ", "bolla", "bolol", "borka", "borok", "borma", "borom", "borża", "boroż", "bozza", "bozoz", "ċanga", "ċaneg", "ċappa", "ċapep", "ċarru", "ċarar", "ċella", "ċelel", "ċerna", "ċeren", "ċinga", "ċineg", "ċinta", "ċinet", "ċoqqa", "ċoqoq", "ċorom", "doċċa", "doċoċ", "farsa", "fares", "farxa", "farax", "faxxa", "faxex", "fidda", "fided", "firma", "firem", "fixxa", "fixex", "folla", "folol", "forġa", "foroġ", "forka", "forok", "forma", "forom", "fossa", "fosos", "gaffa", "gafef", "gaġġa", "gaġeġ", "ġarra", "ġarar", "girna", "giren", "gomma", "gomom", "ġonta", "ġonot", "ħalla", "ħalel", "ħofra", "ħofor", "ħolqa", "ħoloq", "ħotba", "ħotob", "iblaq", "boloq", "kanna", "kanen", "kappa", "kapep", "kaxxa", "kaxex", "kobba", "kobob", "konka", "konok", "koxxa", "koxox", "labra", "labar", "lanċa", "laneċ", "landa", "laned", "lenza", "lanez", "linfa", "linef", "loġġa", "loġoġ", "loqma", "loqom", "manka", "manek", "mappa", "mapep", "massa", "mases", "mazza", "mazez", "mezza", "mezez", "miċċa", "miċeċ", "moffa", "mofof", "molla", "molol", "morsa", "moros", "nassa", "nases", "niċċa", "niċeċ", "nikta", "niket", "palla", "palel", "perċa", "pereċ", "pezza", "pezez", "pinna", "pinen", "pinta", "pinet", "pizza", "pizez", "polza", "poloz", "ponta", "ponot", "porga", "porog", "qatta", "qatet", "qolla", "qolol", "rassa", "rases", "razza", "razez", "rotta", "rotot", "serra", "serer", "setta", "setet", "siġra", "siġar", "sikka", "sikek", "sodda", "sodod", "somma", "somom", "soppa", "sopop", "sorra", "soror", "takka", "takek", "taxxa", "taxex", "tazza", "tazez", "terra", "terer", "tikka", "tikek", "tinda", "tined", "tokka", "tokok", "toqba", "toqob", "torta", "torot", "villa", "vilel", "virga", "vireg", "wilġa", "wileġ", "xalla", "xalel", "xilpa", "xilep", "xoffa", "xofof", "żibġa", "żibeġ", "liżar", "lożor", "qomos", "toroq", "xorok", "xahar", "baħar", "ibħra", "ġemel", "iġmla", "ġifen", "iġfna", "ġisem", "iġsma", "leħen", "ilħna", "ilsna", "oqbra", "qasam", "oqsma", "seqer", "isqra", "sider", "isdra", "xedaq", "ixdqa", "xiber", "ixbra", "/aġeb", "/aġin", "/arus", "/ejun", "/eruq", "/enuq", "/oxux", "/alqa", "/assa", "/ases", "/odda", "/odod", "/oqda", "/oqod", "biġla", "ba/da", "bħata", "bel/a", "baq/a", "barda", "birka", "barma", "barxa", "basra", "beż/a", "beżqa", "bid?n", "bikja", "binja", "ċe/ik", "ċaħda", "ċifja", "ċejqa", "dafra", "dehna", "dehin", "dehix", "dehxa", "daħla", "dalma", "dirka", "da/wa", "dehwa", "dirja", "diwja", "fadla", "fdala", "feġġa", "faġra", "fehim", "fehma", "fakra", "faq/a", "firda", "ferqa", "firxa", "fetħa", "fitla", "fatma", "fetqa", "fatra", "fixla", "afdar", "fejqa", "filja", "fiswa", "ġibda", "ġa/da", "ġa/il", "ġarda", "ġerħa", "ġirja", "ġiżja", "gidma", "girfa", "grixa", "gażja", "/abir", "/adir", "/adar", "/adis", "/afis", "/aġib", "/aġeż", "/alfa", "/alik", "/am?q", "/amiż", "/aqid", "/araġ", "/arik", "/asir", "/atir", "/atis", "/ażil", "/ażiq", "heżża", "ħabta", "ħabża", "ħadit", "ħedla", "ħidma", "ħafna", "ħeġma", "ħalba", "ħalsa", "ħemda", "ħamla", "ħanqa", "ħaqra", "ħarba", "ħarka", "ħarġa", "ħorma", "ħasba", "ħsada", "ħasil", "ħatfa", "ħażar", "ħabja", "ħamja", "ħaxja", "kifsa", "kinsa", "kisba", "kitfa", "tekil", "libta", "leffa", "lefqa", "liġma", "lo/ob", "laħqa", "lemħa", "ntbih", "nadfa", "nadir", "nefħa", "nefqa", "ne/il", "neż/a", "naqja", "newla", "qoħot", "qorob", "qroqq", "qosor", "raħsa", "resqa", "retħa", "rexqa", "reħja", "armar", "sedaq", "sehim", "seħib", "sokor", "satar", "sarar", "te/ib", "temim", "toqol", "tafja", "tamar", "we/id", "tuqit", "xe/il", "xi/ir", "xe/it", "xoqor", "że/il", "żahar", "żanik", "tazzi", "torti", "bolli", "ħemel", "eħmla", "weraq", "werqa", "ideat", "basla", "basal", "zij?t", "ġebla", "ġebel", "ħitan", "żibla", "lehma", "kisja", "ġobon", "ħanex", "lo/ba", "ġabra", "saħħa", "skont", "plott", "gvern", "ħajja", "riġel", "idejn", "dinja", "/aqda", "rebħa", "talba", "/ażla", "qa/da", "mixja", "ħil?t", "parti", "isqof", "rej?t", "klima", "klimi", "films", "norma", "normi", "droga", "drogi", "rawnd", "shows", "kriżi", "ordni", "speċi", "gowls", "klabb", "korpi", "unuri", "rigal", "żball", "salmi", "sessi", "grupp", "fatti", "arj?t", "nir?n", "allat", "prova", "provi", "ittra", "ittri", "we/da", "tribù", "/ib?n", "marzu", "april", "mejju", "ġunju", "lulju", "vjali", "l?bru", "l?bri", "buffu", "buffi", "poplu", "popli", "siġġu", "rwoli", "attur", "żrinġ", "xo/ol", "xem/a", "ġim/a", "ħsara", "na/ġa", "na/aġ", "mo/ża", "mo/oż", "poeta", "poeti", "numru", "frott", "gr?gi", "bżonn", "paġna", "paġni", "ħadid", "ħalib", "/adma", "si/at", "ħut?t", "bib?n", "sbuħa", "oċean", "lvant", "ċifra", "ċifri", "baħri", "lejla", "anġlu", "anġli", "sid?n", "awtur", "bidla", "diska", "diski", "ditta", "ditti", "festa", "festi", "flokk", "forza", "forzi", "gosti", "stati", "karru", "kulur", "mertu", "merti", "patri", "perit", "prezz", "qawwa", "sensi", "silta", "valur", "vapur", "abbuż", "altar", "blata", "blogg", "bomba", "bombi", "busti", "dramm", "dritt", "dubju", "dubji", "epoka", "epoki", "fjura", "fjuri", "/anja", "gibda", "gradi", "ideal", "ikl?t", "iskop", "karta", "karti", "kulti", "laq/a", "linja", "linji", "lista", "listi", "magna", "magni", "marka", "marki", "deheb", "menta", "mezzi", "mutur", "parir", "passi", "platt", "poema", "poemi", "pompa", "pompi", "poter", "povru", "povri", "punti", "rabta", "ritmu", "ritmi", "sejba", "sorsi", "tam?t", "titlu", "titli", "trakk", "wirja", "xejra", "xewqa", "patti", "stili", "vjaġġ", "lanza", "mewta", "tibna", "tiben", "kawza", "kawzi", "ħabib", "torka", "torok", "qamla", "qamel", "qaħba", "/omja", "tarġa", "taraġ", "wereċ", "qormi", "qr?ma", "qotna", "qoton", "gidba", "gideb", "nemla", "nemel", "ċirku", "ċr?ki", "iżmna", "ġir?n", "sehem", "ishma", "seklu", "sekli", "ħakma", "naħla", "tin?t", "ħawħa", "nisel", "insla", "ra/da", "b?dja", "sis?n", "/amla", "nemus", "verbi", "żid?t", "islam", "kalif", "ħmura", "widna", "torri", "kanti", "arena", "areni", "/olja", "korda", "kordi", "maġik", "żifna", "lhudi", "inf?ħ", "renju", "renji", "naħat", "rid?t", "futur", "flawt", "utent", "aħbar", "serje", "metru", "metri", "skors", "iskor", "irj?ħ", "wid?n", "ramel", "qi/an", "laħam", "xirja", "povra", "gr?ga", "malti", "ħobża", "aroma", "aromi", "nanna", "nannu", "/arix", "rħama", "ħaġra", "ħaġar", "/eneb", "/enba", "nibxa", "n?dem", "n?dma", "nd?ma", "andar", "nadra", "bo/od", "ba/al", "nfida", "nifda", "bluha", "benna", "nafra", "niġma", "niġem", "naġra", "nġ?sa", "boqqa", "boqoq", "bruda", "barka", "beraq", "berqa", "nigża", "barri", "bassa", "na/al", "na/la", "na/sa", "neh?d", "naħal", "naħqa", "naħra", "imħra", "nikba", "nemlu", "namra", "namur", "nemes", "nemsa", "inmsa", "nemex", "nemxa", "naqba", "noqba", "noqob", "boton", "botna", "btura", "bż?qu", "bżara", "bżaru", "bażra", "bw?di", "bjuda", "bjada", "bajdu", "bajda", "naq/a", "naqal", "naqla", "naqra", "naqsa", "nqasa", "naqxa", "nasba", "nsabi", "nisġa", "nasar", "nasra", "nassi", "nitfa", "natħa", "nx?fa", "nixfa", "naxra", "bejta", "birja", "bib?t", "bewla", "buq?t", "bewsa", "but?t", "ċa/ka", "ċa/ak", "nidja", "ċokon", "ċelqa", "ċapsa", "ni/at", "nejba", "nejka", "mnara", "mn?ri", "nisja", "newba", "newħa", "ċawla", "ċawlu", "newma", "nawnu", "nawna", "nawni", "nwara", "nixja", "palma", "pr?ċi", "paċ?r", "pappa", "passa", "pases", "pixxa", "qbida", "qabda", "qbadi", "qb?la", "qb?li", "qabla", "qabża", "qadib", "qadfa", "qedem", "qodos", "iqfla", "qafla", "qf?li", "qofol", "eqf?l", "oqfla", "qafas", "oqfsa", "ba/ta", "baħra", "qe/?d", "bikma", "bkura", "bk?ri", "bokra", "qoħta", "ql?bi", "qliba", "qal/a", "qilla", "oqmra", "qomra", "qamsa", "qamat", "qarba", "oqrob", "qriba", "qarda", "qirda", "bluqa", "bolqa", "qar/a", "qarħa", "bqija", "baqqa", "baqta", "qerqa", "qarra", "qrara", "beraħ", "qarsa", "qr?si", "qarsu", "qrusa", "qasba", "qasab", "qasma", "qsima", "mqass", "qasta", "qat/a", "basar", "bexxa", "bidja", "bewġa", "bur?t", "ċarta", "ċiċċa", "debba", "dbiba", "debħa", "difna", "dafar", "d/uma", "dehen", "dhura", "dehra", "deh?x", "daħka", "deħik", "ndħil", "daħna", "dakar", "dakra", "dkura", "dilka", "dl?la", "dem/a", "demel", "damma", "daqqa", "mdaqq", "darra", "dirra", "dirsa", "dxixa", "da/aj", "dur?t", "madar", "midra", "md?ri", "dewba", "dud?t", "dw?wi", "midwa", "md?wi", "dwala", "dawma", "dejma", "dewqa", "godla", "garra", "girża", "geżża", "hemża", "qatla", "qt?li", "qatra", "hedwa", "qxura", "qożża", "qż?żu", "qadja", "qis?n", "qalja", "qarja", "maqar", "maqra", "mqari", "qw?la", "qawma", "qawra", "avviż", "sebħa", "sibka", "sibla", "sbula", "sib?n", "sebqa", "foġġa", "foġoġ", "fiġel", "fiġla", "fa/al", "feh?m", "faħal", "faħam", "faħma", "fekka", "filġa", "sabra", "felli", "fl?li", "sbira", "feles", "sabta", "faqda", "sadda", "sadid", "sedqa", "sidra", "faqam", "faqma", "fqira", "faqar", "faqra", "faqsa", "farda", "fradi", "faraġ", "farġa", "ferħa", "farka", "farex", "fsada", "fisda", "fasla", "fesqa", "fisqa", "ftila", "ft?ta", "fexxa", "safef", "saffi", "fidwa", "sefja", "fejda", "sefħa", "sef/a", "fewġa", "fejta", "ġbira", "ġibsa", "ġidma", "ġdura", "ċe/da", "ġ/uda", "ġe/?d", "ġa/?l", "ġahar", "ġhura", "ġilba", "ġliba", "ġl?da", "ġm?da", "sefqa", "ġem/a", "ġm?/a", "safar", "safra", "isfar", "isfra", "osfra", "sfura", "so/ba", "so/la", "sa/qa", "sahra", "shari", "sħaba", "seħħa", "saħna", "sħana", "ġeh?ż", "ġamar", "ġamra", "ġenba", "saħqa", "seħer", "isħra", "sħ?ri", "ġarba", "ġrada", "saħta", "sħati", "ġer/a", "ġr?/i", "mġarr", "sikma", "sokra", "sakra", "sikta", "ġeżża", "miġja", "mġiba", "ġilwa", "ġl?wi", "salba", "fr?/i", "fer/a", "fru/a", "selfa", "selħa", "sl?ħi", "silka", "sl?ma", "selma", "ilġma", "la/bi", "la/na", "la/qa", "lehba", "lehġa", "leh?m", "lħiħa", "ilħaħ", "leħħa", "laħma", "smida", "sem/a", "laqam", "leqqa", "laqta", "lqata", "laqxa", "ltima", "litem", "limja", "ls?si", "liwja", "milwa", "ml?wi", "lewma", "lewża", "simna", "semen", "smura", "kobor", "kebsa", "kedda", "kefen", "ikfna", "kefna", "kafra", "ka/ka", "ka/ak", "kaħla", "kaħli", "kilba", "samta", "sanna", "isqfa", "sqifa", "soqra", "sirda", "sirġa", "sriħa", "sirka", "sarma", "saram", "sr?ma", "serpa", "serpi", "serqa", "sarra", "set/a", "setaħ", "istħa", "st?ħi", "setħa", "stara", "stari", "satra", "lajma", "klila", "km?da", "kemxa", "karba", "kruha", "karma", "sibja", "misba", "ms?bi", "safja", "sehwa", "saħwa", "sħawi", "ksiba", "kesħa", "kisra", "ktiba", "kotra", "katra", "kixfa", "kibja", "msiba", "sejħa", "sajra", "kejla", "kinin", "misla", "misem", "s?qja", "sw?qi", "saqja", "saqwi", "sqawi", "misqa", "ms?qi", "swafi", "suf?t", "busuf", "sewwa", "siwja", "kakka", "kirja", "kiwja", "kewna", "jasar", "lsira", "sawla", "sawma", "sawna", "sewqa", "sawra", "sur?t", "ma/da", "ma/ad", "me/ka", "me/ra", "me/?r", "mehel", "mehla", "meħer", "maħta", "mħata", "melħa", "mluħa", "mella", "melsa", "mnu/a", "men/a", "mqata", "maqta", "marda", "merħa", "mirek", "meraq", "merqa", "mrara", "mesħa", "masħa", "messa", "matla", "mtira", "maxta", "wiċċa", "wiċeċ", "widba", "wadab", "widen", "wiġba", "waġ/a", "mazzi", "mejla", "milja", "tilja", "we/di", "we/?d", "mewġa", "we/?r", "mawra", "weħla", "waħam", "aħħar", "wilda", "ul?da", "wemen", "emm?n", "em?na", "tuqif", "waqfa", "waq/a", "tuqi/", "werċi", "warda", "wirka", "mxija", "ħebba", "wirta", "ħabla", "ħb?la", "wes/a", "tusi/", "wasla", "wetqa", "miż?b", "weżin", "wiżna", "uż?ni", "miż?n", "witat", "witja", "ħabar", "oħbra", "ħabsi", "ħebża", "uħida", "ħudja", "teħid", "amiri", "imara", "imari", "ażżmu", "ażżmi", "ħdura", "qruna", "ħadra", "ħeffa", "ħafra", "ħaġba", "ħaġeb", "ħeġġa", "ħakka", "ħakem", "ikħma", "ħokom", "ħalfa", "żibda", "żeb/a", "żibel", "żabra", "żeġġa", "żġ?ġa", "że/da", "że/?d", "że/?l", "żo/or", "żehma", "żhuma", "żehra", "żahra", "żikma", "żl?ġa", "żilġa", "żelqa", "żelaq", "żamma", "żinda", "żn?da", "żenqa", "żenaq", "ħl?fa", "ħalġa", "ħolma", "ħliqa", "ħelsa", "ħalta", "ħm?ġa", "ħamġa", "ħamri", "ħmira", "ħamsa", "ħanka", "ħn?na", "ħanxu", "ħanxa", "ħerba", "ħireb", "ħorfa", "ħarqa", "ħerqa", "ħtr?q", "ħrara", "ħarsa", "ħares", "ħarta", "ħasda", "ħasla", "ħasar", "ħasra", "ħiser", "ħisra", "ħassa", "ħsisa", "ħatab", "ħatba", "ħatma", "ħatem", "ħatna", "ħt?na", "ħaten", "ħtint", "ħtara", "ħatra", "ħatar", "ħatta", "ħexba", "ħaxma", "ħoxna", "ħoxon", "ħażma", "żaqqa", "iħżma", "mżaqq", "ħażna", "ħżana", "żarba", "ħażen", "ħażqa", "ħażża", "żarda", "żar/a", "moħba", "ħaf?t", "mħafi", "ħejba", "mħiba", "meħba", "ħt?ġa", "żirka", "żatat", "żejda", "żejża", "żinja", "miżna", "żewqa", "ħj?na", "ħajna", "ħajra", "ħjata", "ħajta", "ħalja", "ħelwa", "ħarja", "maħra", "ħar?t", "ħos?n", "ħasja", "ħaswa", "ħsawi", "ħtija", "ħawda", "ħawja", "ħaxwa", "tb?/i", "tb?/a", "tebħa", "tbiħa", "tibka", "tabal", "otbla", "itbla", "pudur", "tifla", "bdoti", "grokk", "/abid", "tebqa", "tb?qi", "tef/a", "/abra", "/abex", "/adab", "tafal", "tafla", "itfla", "tfali", "t/ila", "t/ala", "t/ima", "to/ma", "ta/an", "ta/na", "taħna", "teħra", "taħra", "t?kla", "telfa", "/adam", "/adsa", "/ajat", "telqa", "tem/a", "/elib", "tm?ma", "temma", "tamra", "tames", "tomsa", "tinsa", "/alla", "/ella", "/el?m", "/eluq", "/alta", "/amad", "/amda", "/emil", "/emża", "toqla", "tqala", "traba", "teraħ", "/aqba", "/aqal", "/oqla", "/oqra", "/arib", "/er?b", "/orba", "/orka", "/arma", "/aram", "/arqa", "/araq", "/asel", "/asra", "/atba", "/otja", "/awma", "/axwa", "/axqa", "/ażeb", "/ażel", "/ożża", "terqa", "tarxa", "mitfa", "mt?fi", "red/a", "radam", "redus", "rgenn", "ra/ad", "ra/aj", "ra/wa", "raheb", "rahba", "raħli", "rikba", "ramla", "roq/a", "reqqa", "rasta", "ratal", "rawta", "raxka", "rażan", "reżħa", "tiġ?n", "tinja", "tarja", "xebba", "xb?ha", "xa/ar", "xh?da", "xn?/a", "xw?ni", "xenqa", "xarba", "xirka", "xitla", "xt?li", "xiwja", "xaħam", "xeħta", "xeħħa", "tiwja", "motwa", "mt?wi", "tewja", "tawla", "tewma", "utiqa", "tutiq", "tewka", "tawru", "tawes", "bimbi", "bandu", "bandi", "na/?t", "ka/ba", "ka/ab", "sapun", "kaċċa", "kaċeċ", "kolja", "kolji", "nervi", "qofof", "rasti", "salva", "sarsa", "sarsi", "serva", "servi", "servu", "torni", "/afja", "longa", "faġan", "santa", "ħarir", "xolfa", "kitba", "tirma", "tr?mi", "ġanda", "/omor", "/aksa", "rm?da", "spraġ", "re/ba", "re/bi", "fus?n", "sfond", "malja", "malji", "leħja", "leħji", "liwji", "kutra", "kutri", "bluża", "blużi", "bronż", "kanun", "kaġun", "sfida", "sfidi", "kanal", "xuf?r", "ċiċra", "ċiċri", "ċiniż", "kleru", "xoqqa", "xoqqi", "xoqoq", "lment", "nw?qi", "sufan", "kuġin", "ċajta", "ħjara", "kuxin", "dwana", "ċista", "ċisti", "brija", "xorti", "stima", "stimi", "friġġ", "garża", "garżi", "ġenju", "ġenja", "ġenji", "ġesti", "daqna", "dqani", "manku", "ernja", "ernji", "xefaq", "ixfqa", "sptar", "silġa", "ġelat", "im/ax", "pawsa", "jodju", "brama", "kilwa", "medda", "meddi", "meded", "ġilju", "ġilji", "ljuni", "likur", "loker", "lussu", "lussi", "saqqu", "fungu", "fungi", "żokra", "żk?ri", "żokor", "nutar", "xidja", "orfni", "palat", "pagun", "tewba", "lapes", "frażi", "pesta", "pesti", "pudil", "pejxu", "pejxa", "pejxi", "ro/da", "r?dna", "r?dni", "żbirr", "milsa", "fam?t", "rvell", "rokit", "skeda", "skedi", "xiżma", "xiżmi", "senat", "ombra", "ombri", "rpari", "tarka", "tarki", "tarek", "xlokk", "lok?n", "skeċċ", "ġidri", "borra", "sokit", "swarè", "sfera", "sferi", "globu", "globi", "palks", "lamtu", "lamti", "spaga", "raġġi", "ċinju", "ċinji", "frodi", "swiċċ", "ħarra", "tej?t", "injam", "torċa", "torċi", "gar?t", "rmixk", "teżor", "kirxa", "kirex", "weġ/a", "tifun", "użura", "użuri", "d?lja", "dw?li", "vinja", "vinji", "lif/a", "felul", "naħja", "nħawi", "wiski", "/amża", "/adba", "rvina", "rvini", "/ajta", "/arbi", "/arab", "salti", "ankra", "ankri", "aniżi", "skuża", "skużi", "aptit", "medja", "medji", "dahar", "idhra", "lixka", "lixki", "x/ira", "ħabqa", "ħabaq", "banju", "bajja", "travu", "travi", "ful?t", "vampa", "vampi", "brejk", "żiffa", "madum", "xkupa", "xkupi", "brodu", "iġbna", "rimja", "butir", "kakaw", "/oġol", "/oġla", "kalma", "kawża", "kawżi", "/er?n", "kalċi", "xażis", "ċekks", "rwasa", "klipp", "drapp", "każin", "kosta", "kosti", "ġlekk", "felwa", "fl?wi", "kmand", "sufra", "sufri", "kolpi", "granċ", "krema", "kremi", "kredu", "ħatja", "karis", "pap?t", "ballu", "tamal", "tamla", "dekan", "xeb/a", "desks", "disks", "baċir", "ħam?m", "golja", "golji", "drink", "papra", "papri", "dwell", "dwett", "dazju", "dazji", "ajkla", "ajkli", "lifts", "imejl", "errur", "vista", "visti", "pufta", "pufti", "fanns", "palju", "palji", "fs?wi", "favur", "multa", "multi", "sular", "xkuma", "xkumi", "ġlata", "furja", "furji", "ġemma", "ġemmi", "kolla", "kolol", "wiżża", "wiżeż", "gramm", "ġurat", "gwida", "gwidi", "gawwi", "dannu", "danni", "ħobis", "idolu", "idoli", "renta", "renti", "linka", "linek", "l?dna", "l?dni", "buqar", "xorta", "lampa", "lampi", "żbark", "ħoġor", "pavru", "pavri", "strat", "lenti", "qamlu", "litru", "litri", "ifwda", "lobbi", "flett", "posta", "arblu", "arbli", "ħosba", "/azza", "xadin", "mopps", "/odwa", "vistu", "maggs", "mużew", "ġewża", "opera", "kokka", "kokki", "qalza", "stann", "arżnu", "perni", "pleġġ", "plagg", "ponis", "priża", "priżi", "pruwa", "pruna", "polzi", "stokk", "kwart", "kwota", "kwoti", "radju", "radji", "żbiba", "skoll", "rażna", "rossa", "lemin", "skart", "bażwa", "bżawi", "żafir", "xalpa", "xalpi", "skawt", "skrin", "finta", "finet", "xampu", "faxxi", "xawer", "sinks", "skjav", "motto", "xrara", "fatat", "/aġla", "brimb", "krikk", "sport", "sprej", "spjun", "spija", "spiji", "stejġ", "stejk", "azzar", "sforz", "swejd", "taċċi", "tejps", "matra", "botta", "botti", "taksi", "bw?ri", "eżami", "ħxuna", "tigra", "tigri", "tipps", "tajer", "towst", "tadam", "/ad?t", "trota", "troti", "bt?ti", "tumur", "ħamba", "tutur", "vażun", "vaska", "vaski", "vġili", "virtù", "viżta", "viżti", "gilpa", "gilep", "volum", "vagun", "valzi", "ft?li", "wajer", "korla", "jarda", "jardi", "żebra", "żenit", "żingu", "żipps", "babaw", "skema", "skemi", "żrara", "briks", "wiż/a", "ħafur", "selqa", "mħara", "ġ?bja", "ġw?bi", "nvjar", "mer/a", "atomu", "atomi", "tawri", "unità", "ittrè", "/omma", "/akka", "xa/at", "ġbara", "soldi", "torba", "lemma", "lemmi", "xa/ri", "ħorża", "ħoroż", "karfa", "xarks", "apert", "buful", "ba/ar", "ba/ra", "ib/ar", "swaba", "/aġba", "ndafa", "s?qek", "s?qha", "s?qna", "xbint", "simar", "fir?n"]
+
+	
+
+	var ChangeLogApp = angular.module("ChangeLogApp", []);
+    
+      
+      ChangeLogApp.controller('ChangeLogController', function($http, $scope) {
+
+		let w_i = null
+		let chosen_w = null
+		$scope.current_guess = []
+		$scope.guess_matrix = []
+		
+		$scope.active = false
+		
+		let restart = function(seeded){
+
+			if(seeded){
+				w_i = Math.floor(vocab.length * mulberry32(day_of_year())())
+			}else
+				w_i = Math.floor(vocab.length * Math.random())
+			chosen_w = vocab[w_i]
+			$scope.current_guess = []
+			$scope.guess_matrix = []
+			
+			$scope.active = true
+			$scope.bad_letters = []
+			$scope.mid_letters = []
+			$scope.good_letters = []
+			$scope.$apply()
+		}
+
+		Swal.fire({
+			title: "Wordle bil-Malti",
+			showCancelButton: false,
+			html: "Għandek 6 tentattivi biex taqta' l-kelma, li dejjem tkun nom (plural jew singular) ta' ħames ittri..<br> > Jekk taqta' ittra fil-post it-tajjeb, tiġi ħadra.<br> > Jekk taqta' ittra imma mhux f'postha, tiġi oranġjo.<br> > Jekk l-ebda, tibqa' griża.<br> Kliem meħud minn <a href='https://mlrs.research.um.edu.mt/resources/gabra/' > Ġabra </a> <br> - Michael Pulis",
+			confirmButtonText: "Tajjeb",
+			}).then((result) => {
+			/* Read more about isConfirmed, isDenied below */
+				Swal.fire({
+					title: "Trid tilgħab il-kelma tal-lum, jew kelma li tkun?",
+					showDenyButton: true,
+					showCancelButton: false,
+					confirmButtonText: "Tal-lum",
+					denyButtonText: `Li Tkun`,
+				}).then((result) => {
+				/* Read more about isConfirmed, isDenied below */
+				if (result.isConfirmed) {
+					restart(true)
+				} else if (result.isDenied) {
+					restart(false)
+				}
+			})
+		})
+
+		$scope.top_row = ['Q','W','E','R','T','U','I','?','O','P']
+		$scope.mid_row = ['A','S','D','F','G','Ħ','H','/', 'J', 'K', 'L']
+		$scope.bot_row = ['⏎', 'Z','Ż','X','Ċ','V','Ġ','B','N','M', '⌫']
+		$scope.bad_letters = []
+		$scope.mid_letters = []
+		$scope.good_letters = []
+
+		let getClue = function(st, ans){
+		    let clue = ["_", "_", "_", "_", "_"]
+		   
+
+		    for(let i = 0; i < st.length; i ++){
+		        if(ans.includes(st[i])) clue[i] = "O"
+
+		        if(st[i] == ans[i]) clue[i] = "X"
+		    }
+
+		    return clue
+		   
+		}
+
+		$scope.getClassForRow = function(row){
+			let guess = $scope.guess_matrix[row]
+
+			let res = []
+
+			let letters = {}
+			for(let i = 0; i < chosen_w.length; i ++){
+				res.push("")
+
+				let c = chosen_w[i]
+
+				if(!(c in letters)) letters[c] = 1
+				else letters[c] += 1
+			}
+
+			// remove the greens
+			for(let i = 0; i < guess.length; i ++){
+				if(guess[i] == chosen_w[i]){
+					res[i] = "green"
+					letters[guess[i]] -= 1
+					$scope.good_letters.push(guess[i])
+
+				}
+			}
+
+			// do the oranges
+			for(let i = 0; i < guess.length; i ++){
+				gl = guess[i]
+				if(gl in letters && letters[gl] > 0){
+
+					if(res[i] != 'green'){
+						letters[gl] -= 1
+						res[i] = "orange"
+						$scope.mid_letters.push(gl)
+					}	
+				}
+			}
+
+			// add the bad ones to the keyboard
+			for(let i = 0; i < guess.length; i ++){
+				let gl = guess[i]
+				if(!chosen_w.includes(gl)) $scope.bad_letters.push(gl)
+			}
+
+			return res
+		}
+		
+		let get_emoji_string = function(){
+				let emoji_string = ''
+				let score = 0
+
+				for(let i = 0; i < $scope.guess_matrix.length; i++){
+
+						score += 1
+						split_word = $scope.getClassForRow(i).toString().split(',')
+						console.log("AA" + split_word)
+
+						for(color in split_word){
+								console.log("CURRENT COLOR: " + split_word[color])
+							if (split_word[color]== 'orange'){
+									emoji_string += '🟧'
+							} else if (split_word[color]== 'green'){
+								emoji_string += '🟩'
+							} else {
+								emoji_string += '⬛'
+							}
+						}
+								emoji_string += '\n'
+				}
+				return ' Werdil ' + score + '/6\n' + emoji_string
+		}
+		
+
+		let checkIfWordExists = function(word){
+
+		}
+
+		  $scope.handleSpecials = function(code, st){
+			if(code == 8){
+      			$scope.current_guess.pop()
+      		}else if(code == 13){
+      			if($scope.current_guess.length != 5) return
+				  $http({
+					method: 'GET',
+					url: 'https://mlrs.research.um.edu.mt/resources/gabra-api/lexemes/search?s='+word_to_real($scope.current_guess.join(""))
+				}).then(function successCallback(response) {
+					exists = response.data.results.length > 0
+					
+					if(!exists){
+						$scope.current_guess = []
+						Swal.fire({
+							title: 'Mhux fid-dizzjunarju!',
+							// text: word_to_real(word) + ' bl-Ingliż tiġi \'' + resp + '\'',
+							icon: 'error',
+							confirmButtonText: 'Ma ġara xejn'
+						}).then((result) => {
+						/* Read more about isConfirmed, isDenied below */
+							
+						})
+					}else{
+						$scope.guess_matrix.push([...$scope.current_guess])
+						if($scope.current_guess.join("") == chosen_w){
+							$scope.active = false
+
+							$scope.getWordDefinition(chosen_w, true)
+						}else if($scope.guess_matrix.length == 6){
+							$scope.active = false
+							$scope.getWordDefinition(chosen_w, false)
+
+						}
+						
+						$scope.current_guess = []
+					}
+					
+					
+				});
+				
+				 
+				  
+      			
+      		}
+
+      		$scope.$apply()
+		  }
+
+
+		let word_to_real = function(word){
+			return word.replace("?", "ie").replace("/", "għ")
+		}
+
+		let day_of_year = function(){
+			var now = new Date();
+			var start = new Date(now.getFullYear(), 0, 0);
+			var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+			var oneDay = 1000 * 60 * 60 * 24;
+			var day = Math.floor(diff / oneDay);
+			return day
+		}
+
+		let mulberry32 = function (a) {
+			return function() {
+			var t = a += 0x6D2B79F5;
+			t = Math.imul(t ^ t >>> 15, t | 1);
+			t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+			return ((t ^ t >>> 14) >>> 0) / 4294967296;
+			}
+		}
+
+		$scope.getWordDefinition = function(word, managed) {
+			$http({
+				method: 'GET',
+				url: 'https://mlrs.research.um.edu.mt/resources/gabra-api/lexemes/search?s='+word_to_real(word)
+			}).then(function successCallback(response) {
+				resp = response.data.results[0].lexeme.glosses[0].gloss.trim()
+				Swal.fire({
+					title: managed ? 'Proset!' : "Ma qtajtx! '" + word_to_real(word) + "' kienet.",
+					text: word_to_real(word) + ' bl-Ingliż tiġi \'' + resp + '\'',
+					icon: 'info',
+					denyButtonText:'Aqsam ir-riżultat',
+					showDenyButton: true,
+					confirmButtonText: 'Ipprova kelma ohra'
+				}).then((result) => {
+				/* Read more about isConfirmed, isDenied below */
+					if (result.isConfirmed) {
+						restart(false)
+					}  else{
+							get_emoji_string()
+						navigator.clipboard.writeText(get_emoji_string())
+					}
+				})
+				
+			}, function errorCallback(response) {
+
+				return "ERRORSWAG"
+				// called asynchronously if an error occurs
+				// or server returns response with an error status.
+			});
+		}
+
+		$scope.handleRegular = function(st){
+			if(!$scope.active) return
+			let last_letter = $scope.current_guess[$scope.current_guess.length-1]
+			if(st == 'e' && $scope.current_guess.length>0 && last_letter=='i'){
+				$scope.current_guess.pop()
+				$scope.current_guess.push("?")
+				return
+			} else if(st == 'ħ' && $scope.current_guess.length>0 && last_letter=='g'){
+				$scope.current_guess.pop()
+				$scope.current_guess.push("/")
+				return
+			}
+
+			if(st.match(/[0-9A-Za-zħġżċ?/!]/) && $scope.current_guess.length < 5)
+				$scope.current_guess.push(st)
+		}
+
+      	document.addEventListener("keypress", function(event) {
+			if(!$scope.active) return
+
+      		let code = event.keyCode
+      		let st = String.fromCharCode(code)
+
+      		if(code == 8){
+      			$scope.current_guess.pop()
+      		}else{
+
+			
+				$scope.handleRegular(st)
+      		}
+
+      		$scope.$apply()
+		});
+
+
+      	document.addEventListener("keyup", function(event) {
+			if(!$scope.active) return
+
+      		let code = event.keyCode
+      		let st = String.fromCharCode(code)
+
+      		$scope.handleSpecials(code, st)
+		});
+
+
+      	$scope.pushLetter = function(lt){
+			  
+
+			if(lt == '⌫'){
+				$scope.handleSpecials(8, "")
+				return
+			}else if(lt == '⏎'){
+				$scope.handleSpecials(13,"")
+				return
+			}
+
+			
+			$scope.handleRegular(lt)
+      	}
+
+
+		$scope.renderLetter = function(lt){
+			if(lt == '/') return 'GĦ'
+			else if(lt == '?') return 'IE'
+			else return lt.toUpperCase()
+		}
+
+		$scope.keyb_colour = function(lr){
+			if($scope.bad_letters.includes(lr)) return "bad"
+			if($scope.good_letters.includes(lr)) return "good"
+			if($scope.mid_letters.includes(lr)) return "mid"
+			else return ""
+		}
+
+      	// gameLoop(vocab)
+      });
+	
+</script>
+
+	<div  ng-app="ChangeLogApp" ng-controller="ChangeLogController">
+		<div class='holder'>
+			<div> 
+				<table id= "inp_table" align="center">
+					<tr ng-repeat="guess in guess_matrix">
+						<td ng-repeat="char in guess track by $index" class="{{getClassForRow($parent.$index)[$index]}}">
+							{{renderLetter(char[0])}}
+						</td>
+					</tr>
+
+					<tr>
+						<td ng-repeat="char in current_guess track by $index">
+							{{renderLetter(char[0])}}
+						</td>
+					</tr>
+
+				</table>
+			</div>
+
+			<div id = 'keyboard'>
+				<div class='row'>
+					<button ng-repeat="letter in top_row" ng-click="pushLetter(letter.toLowerCase())" class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
+				</div>
+
+				<div class='row middle-row'>
+					<button ng-repeat="letter in mid_row" ng-click="pushLetter(letter.toLowerCase())" class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
+				</div>
+
+				<div class='row'>
+					<button ng-repeat="letter in bot_row" ng-click="pushLetter(letter.toLowerCase())" class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+</html>
