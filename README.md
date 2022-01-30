@@ -12,6 +12,9 @@ Kontribuzzjonijiet Oħrajn:
 
 ***
 Idea meħuda direttament minn https://www.powerlanguage.co.uk/wordle/
+***
+
+TODO List: https://github.com/wordle-malti/wordle-malti.github.io/wiki
 
 ***
 
