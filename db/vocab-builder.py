@@ -2,6 +2,7 @@
 
 # By Michael Pulis / Franco Cassar Manghi
 import json, jsonlines
+allowed_pos = {"NOUN", "VERB"}
 relevant_pos = set()
 
 def maltese_to_placeholders(word):
@@ -15,13 +16,15 @@ def is_wordform_valid(wordform):
 def is_wordform_lexeme_supported(wordform):
     return is_wordform_valid(wordform) and wordform['lexeme_id']["$oid"] in relevant_pos
 
+def is_allowed_pos(pos):
+    return pos in allowed_pos
+
 # get part of speech of each word
 with jsonlines.open("lexemes.json") as reader:
     for lexeme in reader:
         if "pos" not in lexeme:
             continue
-        lexeme_pos = lexeme["pos"]
-        if lexeme_pos == "NOUN": # do not load more items than we need into memory we only need NOUNs
+        if is_allowed_pos(lexeme["pos"]): # do not load more items than we need into memory
             relevant_pos.add(lexeme["_id"]["$oid"])
 
 dictionary = set()
