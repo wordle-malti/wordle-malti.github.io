@@ -30,6 +30,6 @@ cp /tmp/werdil/db/vocab-builder.py .
 
 python3 vocab-builder.py
 
-cp dictionary.json /tmp/werdil/site/dictionary.json
+cp dictionary.json /tmp/werdil/docs/dictionary.json
 
-echo "Dictionary populated and stored under site/dictionary.json."
+echo "Dictionary populated and stored under docs/dictionary.json."
