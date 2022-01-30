@@ -4,7 +4,7 @@ services:
   werdil:
     image: nginx:latest
     volumes:
-      - ./site/:/usr/share/nginx/html:ro
+      - "./docs/:/usr/share/nginx/html:ro"
     restart: unless-stopped
     ports:
       - "8080:80"
