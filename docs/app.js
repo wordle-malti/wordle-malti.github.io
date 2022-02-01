@@ -161,7 +161,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
             } else {
                 $scope.current_guess = []
                 Swal.fire({
-                    title: 'Mhux nom, jew mhux fid-dizzjunarju!',
+                    title: 'Mhux fid-dizzjunarju!',
                     icon: 'error',
                     confirmButtonText: 'Ma ġara xejn'
                 })
