@@ -322,5 +322,3 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         return a
     }
 });
-
-
