@@ -23,23 +23,34 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.6/sweetalert2.min.js"></script>
-<script charset="UTF-8" src="app.js" integrity="sha512-fkWXOWWVKTuQtk8/DugaVL+tfwzAY43jECN/XZmVD0yKep8Pc3aEC+17MtvfE9fHGkVRNBKws+LtpQvGUCXCTw==" crossorigin="anonymous" ></script>
-
+<script charset="UTF-8" src="app.js"  integrity="sha512-IQ2GVA6o+exxl/CP/GRbQpn5Qv16QyU6Rw7RrG6p1t6tlZlAzXEBielx9Ixj85pdJ0JpvtnVNP/JzUUpTOkJsw==" crossorigin="anonymous"></script> 
+<!-- integrity="sha512-IQ2GVA6o+exxl/CP/GRbQpn5Qv16QyU6Rw7RrG6p1t6tlZlAzXEBielx9Ixj85pdJ0JpvtnVNP/JzUUpTOkJsw==" crossorigin="anonymous" -->
 <div ng-app="ChangeLogApp" ng-controller="ChangeLogController" ng-cloak>
 	<div class='holder'>
 		<div>
 			<table id="inp_table" align="center">
+
+				
+
 				<tr ng-repeat="guess in guess_matrix">
 					<td ng-repeat="char in guess track by $index" class="{{getClassForRow($parent.$index)[$index]}}">
 						{{renderLetter(char[0])}}
 					</td>
 				</tr>
 
-				<tr>
-					<td ng-repeat="char in current_guess track by $index">
-						{{renderLetter(char[0])}}
+				<tr ng-if="guess_matrix.length != 6">
+					<td ng-repeat="char in [0,1,2,3,4]  track by $index" class ="guess_box">
+						{{  char < current_guess.length ? renderLetter(current_guess[char]) : ""}}
 					</td>
 				</tr>
+
+				<tr ng-repeat="a in remainder()">
+					<td ng-repeat="a in [0,1,2,3,4]" class="empty_box">
+						<!-- {{renderLetter(char[0])}} -->
+					</td>
+				</tr>
+
+				
 
 			</table>
 		</div>
