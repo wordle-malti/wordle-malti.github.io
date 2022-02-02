@@ -2,6 +2,12 @@ var ChangeLogApp = angular.module("ChangeLogApp", []);
 
 ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
 
+    $http({
+        method: 'GET',
+        url: 'https://api.countapi.xyz/hit/wordle-malti.com/page_views'
+    }).then(function successCallback(response) {
+    })
+
     let w_i = null
     let chosen_w = null
     $scope.current_guess = []
@@ -18,6 +24,12 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
     }
 
     let restart = function (seeded) {
+
+        $http({
+            method: 'GET',
+            url: 'https://api.countapi.xyz/hit/wordle-malti.com/game_count'
+        }).then(function successCallback(response) {
+        })
 
         if (seeded) {
             w_i = Math.floor($scope.vocab.length * mulberry32(day_of_year())())
