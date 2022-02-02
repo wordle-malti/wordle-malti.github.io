@@ -39,7 +39,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         Swal.fire({
             title: "Avviż!",
             showCancelButton: false,
-            html: "<h1>Il-kliem qabel kienu bilfors nomi. M'għadiex hekk il-logħba issa. Jistaw ikunu kwalunkwe kelma ta' ħames ittri. <br> - Michael Pulis",
+            html: "<h1>Il-kliem qabel kienu bilfors nomi. M'għadhiex hekk il-logħba issa. Jistgħu ikunu kwalunkwe kelma ta' ħames ittri. <br> - Michael Pulis",
             confirmButtonText: "Tajjeb",
             allowOutsideClick: false,
         }).then((r) => {
