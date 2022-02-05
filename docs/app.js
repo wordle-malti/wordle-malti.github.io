@@ -187,7 +187,8 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
                 }
                 $scope.current_guess = []
             }else{
-                showSnackbarMessage('Mhux fid-dizzjunarju!')
+                showSnackbarMessage('\''+$scope.current_guess.join("")+'\' mhux fid-dizzjunarju!', 'top', 'error')
+                $scope.current_guess = []
             }
             
         }
@@ -216,11 +217,16 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         }
     }
 
-    let showSnackbarMessage = function (message) {
-        var x = document.getElementById("snackbar");
-        x.className = "show";
-        x.textContent = message;
-        setTimeout(function () { x.className = x.className.replace("show", ""); }, 6000);
+    let showSnackbarMessage = function (message, pos, type) {
+        Swal.mixin({
+            toast: true,
+            position: pos,
+            showConfirmButton: false,
+            title:message,
+            // icon: type,
+            timer: 3000,
+            timerProgressBar: true,
+          }).fire()
     }
 
     $scope.getWordDefinition = function (word, managed) {
@@ -249,7 +255,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
                 } else {
                     get_emoji_string()
                     navigator.clipboard.writeText(get_emoji_string(managed))
-                    showSnackbarMessage('Ir-riżultat ġie kkupjat fil-clipboard.')
+                    showSnackbarMessage('Ir-riżultat ġie kkupjat fil-clipboard.', 'bottom', 'info')
                 }
             })
 
