@@ -187,7 +187,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
                 }
                 $scope.current_guess = []
             }else{
-                showSnackbarMessage('\''+$scope.current_guess.join("")+'\' mhux fid-dizzjunarju!', 'top', 'error')
+                showSnackbarMessage('\''+word_to_real($scope.current_guess.join(""))+'\' mhux fid-dizzjunarju!', 'top', 'error')
                 $scope.current_guess = []
             }
             
@@ -196,7 +196,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
     }
 
     let word_to_real = function (word) {
-        return word.replace("?", "ie").replace("/", "għ")
+        return word.replaceAll("?", "ie").replaceAll("/", "għ")
     }
 
     let day_of_year = function () {
