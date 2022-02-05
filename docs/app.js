@@ -187,13 +187,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
                 }
                 $scope.current_guess = []
             }else{
-                $scope.current_guess = []
-                Swal.fire({
-                    title: 'Mhux fid-dizzjunarju!',
-                    icon: 'error',
-                    confirmButtonText: 'Ma ġara xejn'
-                }).then((result) => {
-                })
+                showSnackbarMessage('Mhux fid-dizzjunarju!')
             }
             
         }
@@ -234,10 +228,15 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
             method: 'GET',
             url: 'https://mlrs.research.um.edu.mt/resources/gabra-api/lexemes/search?s=' + word_to_real(word)
         }).then(function successCallback(response) {
-            resp = response.data.results[0].lexeme.glosses[0].gloss.trim()
+            resp = -1
+            try{
+                resp = response.data.results[0].lexeme.glosses[0].gloss.trim()
+            }catch(error){
+
+            }
             Swal.fire({
                 title: managed ? 'Proset!' : "Ma qtajtx! '" + word_to_real(word) + "' kienet.",
-                text: word_to_real(word) + ' bl-Ingliż tiġi \'' + resp + '\'',
+                text: resp == -1 ?  "" : word_to_real(word) + ' bl-Ingliż tiġi \'' + resp + '\'',
                 icon: 'info',
                 denyButtonText: 'Aqsam ir-riżultat',
                 showDenyButton: true,

@@ -152,3 +152,7 @@ td.guess_box {
     border: gray solid 5px;
     height:1.2em;
 }
+
+* {
+    touch-action: manipulation;
+}
