@@ -318,7 +318,6 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
     }
 
     $scope.renderLetter = function (lt) {
-        // console.log(lt)
         if (lt == '/') return 'GĦ'
         else if (lt == '?') return 'IE'
         else return lt.toUpperCase()
@@ -334,8 +333,6 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
     $scope.remainder = function(){
         let a = []
         for (let i = 0; i < 6-$scope.guess_matrix.length-1; i ++) a.push(i)
-
-        // console.log('returning',a)
         return a
     }
 });

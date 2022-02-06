@@ -1,79 +1,69 @@
 <html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Werdil</title>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" href="styles.css">
 
-<head>
-	<meta charset="UTF-8">
-	<title>Werdil</title>
-	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-	<meta http-equiv="Pragma" content="no-cache" />
-	<meta http-equiv="Expires" content="0" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-	<link rel="stylesheet" href="styles.css">
-
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-	<link rel="manifest" href="/site.webmanifest">
-</head>
-<div class='holder'>
-	<h1> Werdil </button></h1>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
-<script async src="https://api.countapi.xyz/hit/wordle-malti.github.io/visits?callback=cb"></script>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" />
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.6/sweetalert2.min.js"></script>
-<script charset="UTF-8" src="app.js"  integrity="sha512-JshuEtEIGkahWRTx49zTX7T6jG8cQ7klyJbmnWKFw0OWsAoqvJpUPgdEDKDEQsylPYi4yN6UnvwwSMOAYVCA6w==" crossorigin="anonymous"></script> 
-<div ng-app="ChangeLogApp" ng-controller="ChangeLogController" ng-cloak>
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+	</head>
 	<div class='holder'>
-		<div>
-			<table id="inp_table" align="center">
+		<h1> Werdil </button></h1>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+	<script async src="https://api.countapi.xyz/hit/wordle-malti.github.io/visits?callback=cb"></script>
 
-				
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" />
 
-				<tr ng-repeat="guess in guess_matrix">
-					<td ng-repeat="char in guess track by $index" class="{{getClassForRow($parent.$index)[$index]}}">
-						{{renderLetter(char[0])}}
-					</td>
-				</tr>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.6/sweetalert2.min.js"></script>
+	<script charset="UTF-8" src="app.js"  integrity="sha512-TbRsG9Ut8jKFgZfFuGKO7xwEPJE01F7afu06P/g7iHpi2zDU7XxHQ9XhdIcpi9/XqnPeaF8WaxfQBsFas4JdDA==" crossorigin="anonymous"></script> 
+	<div ng-app="ChangeLogApp" ng-controller="ChangeLogController" ng-cloak>
+		<div class='holder'>
+			<div>
+				<table id="inp_table" align="center">
+					<tr ng-repeat="guess in guess_matrix">
+						<td ng-repeat="char in guess track by $index" class="{{getClassForRow($parent.$index)[$index]}}">
+							{{renderLetter(char[0])}}
+						</td>
+					</tr>
 
-				<tr ng-if="guess_matrix.length != 6">
-					<td ng-repeat="char in [0,1,2,3,4]  track by $index" class ="guess_box">
-						{{  char < current_guess.length ? renderLetter(current_guess[char]) : ""}}
-					</td>
-				</tr>
+					<tr ng-if="guess_matrix.length != 6">
+						<td ng-repeat="char in [0,1,2,3,4]  track by $index" class ="guess_box">
+							{{  char < current_guess.length ? renderLetter(current_guess[char]) : ""}}
+						</td>
+					</tr>
 
-				<tr ng-repeat="a in remainder()">
-					<td ng-repeat="a in [0,1,2,3,4]" class="empty_box">
-						<!-- {{renderLetter(char[0])}} -->
-					</td>
-				</tr>
-
-				
-
-			</table>
-		</div>
-
-		<div id='keyboard'>
-			<div class='row'>
-				<button ng-repeat="letter in top_row" ng-click="pushLetter(letter.toLowerCase())"
-					class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
+					<tr ng-repeat="a in remainder()">
+						<td ng-repeat="a in [0,1,2,3,4]" class="empty_box">
+							<!-- {{renderLetter(char[0])}} -->
+						</td>
+					</tr>
+				</table>
 			</div>
 
-			<div class='row middle-row'>
-				<button ng-repeat="letter in mid_row" ng-click="pushLetter(letter.toLowerCase())"
-					class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
-			</div>
+			<div id='keyboard'>
+				<div class='row'>
+					<button ng-repeat="letter in top_row" ng-click="pushLetter(letter.toLowerCase())"
+						class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
+				</div>
 
-			<div class='row'>
-				<button ng-repeat="letter in bot_row" ng-click="pushLetter(letter.toLowerCase())"
-					class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
+				<div class='row middle-row'>
+					<button ng-repeat="letter in mid_row" ng-click="pushLetter(letter.toLowerCase())"
+						class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
+				</div>
+
+				<div class='row'>
+					<button ng-repeat="letter in bot_row" ng-click="pushLetter(letter.toLowerCase())"
+						class="{{keyb_colour(letter.toLowerCase())}}"> {{renderLetter(letter)}} </button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<div id="snackbar"></div>
-
-
-
+	<div id="snackbar"></div>
 </html>
