@@ -2,6 +2,12 @@ var ChangeLogApp = angular.module("ChangeLogApp", []);
 
 ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
 
+    $http({
+        method: 'GET',
+        url: 'https://api.countapi.xyz/hit/wordle-malti.com/page_views'
+    }).then(function successCallback(response) {
+    })
+
     let w_i = null
     let chosen_w = null
     $scope.current_guess = []
@@ -18,6 +24,13 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
     }
 
     let restart = function (seeded) {
+
+        $http({
+            method: 'GET',
+            url: 'https://api.countapi.xyz/hit/wordle-malti.com/game_count'
+        }).then(function successCallback(response) {
+        })
+
         if (seeded) {
             w_i = Math.floor($scope.vocab.length * mulberry32(day_of_year())())
         } else
@@ -36,31 +49,44 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
 
     let startDialogue = function () {
         Swal.fire({
-            title: "Wordle bil-Malti",
+            title: "Avviż!",
             showCancelButton: false,
-            html: "Għandek 6 tentattivi biex taqta' l-kelma, li dejjem tkun nom (plural jew singular) ta' ħames ittri..<br> > Jekk taqta' ittra fil-post it-tajjeb, tiġi ħadra.<br> > Jekk taqta' ittra imma mhux f'postha, tiġi oranġjo.<br> > Jekk l-ebda, tibqa' griża.<br> Kliem meħud minn <a href='https://mlrs.research.um.edu.mt/resources/gabra/' target='_blank'> Ġabra </a> <br> - Michael Pulis",
+            html: "<h1>Il-kliem qabel kienu bilfors nomi. M'għadhiex hekk il-logħba issa. Jistgħu ikunu kwalunkwe kelma ta' ħames ittri. <br> - Michael Pulis",
             confirmButtonText: "Tajjeb",
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
+            allowOutsideClick: false,
+        }).then((r) => {
             Swal.fire({
-                title: "Trid tilgħab il-kelma tal-lum, jew kelma li tkun?",
-                showDenyButton: true,
+                title: "Wordle bil-Malti",
                 showCancelButton: false,
-                confirmButtonText: "Tal-lum",
-                denyButtonText: `Li Tkun`,
+                html: "Għandek 6 tentattivi biex taqta' l-kelma ta' ħames ittri..<br> > Jekk taqta' ittra fil-post it-tajjeb, tiġi ħadra.<br> > Jekk taqta' ittra imma mhux f'postha, tiġi oranġjo.<br> > Jekk l-ebda, tibqa' griża.<br> Kliem meħud minn <a href='https://mlrs.research.um.edu.mt/resources/gabra/' target='_blank'> Ġabra </a> <br> - Michael Pulis",
+                confirmButtonText: "Tajjeb",
+                allowOutsideClick: false,
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    restart(true)
-                } else if (result.isDenied) {
-                    restart(false)
-                }
+                Swal.fire({
+                    title: "Trid tilgħab il-kelma tal-lum, jew kelma li tkun?",
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: "Tal-lum",
+                    denyButtonText: `Li Tkun`,
+                    allowOutsideClick: false,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        restart(true)
+                    } else if (result.isDenied) {
+                        restart(false)
+                    }
+                })
             })
+
         })
+
+
     }
 
     Promise.all([
-        fetch('vocab.json').then(resp => resp.json()).then(json => $scope.vocab = json),
+        fetch('answers.json').then(resp => resp.json()).then(json => $scope.vocab = json),
         fetch('dictionary.json').then(resp => resp.json()).then(json => $scope.dict = json)
     ]).then(startDialogue)
 
@@ -117,7 +143,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         return res
     }
 
-    let get_emoji_string = function () {
+    let get_emoji_string = function (guessed_it) {
         let emoji_string = ''
         let score = 0
 
@@ -136,6 +162,8 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
             }
             emoji_string += '\n'
         }
+
+        score = guessed_it ? score : "X"
         return ' Werdil ' + score + '/6\n' + emoji_string
     }
 
@@ -158,20 +186,17 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
                     $scope.getWordDefinition(chosen_w, false)
                 }
                 $scope.current_guess = []
-            } else {
+            }else{
+                showSnackbarMessage('\''+word_to_real($scope.current_guess.join(""))+'\' mhux fid-dizzjunarju!', 'top', 'error')
                 $scope.current_guess = []
-                Swal.fire({
-                    title: 'Mhux fid-dizzjunarju!',
-                    icon: 'error',
-                    confirmButtonText: 'Ma ġara xejn'
-                })
             }
+            
         }
         reapply()
     }
 
     let word_to_real = function (word) {
-        return word.replace("?", "ie").replace("/", "għ")
+        return word.replaceAll("?", "ie").replaceAll("/", "għ")
     }
 
     let day_of_year = function () {
@@ -192,11 +217,16 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         }
     }
 
-    let showSnackbarMessage = function (message) {
-        var x = document.getElementById("snackbar");
-        x.className = "show";
-        x.textContent = message;
-        setTimeout(function () { x.className = x.className.replace("show", ""); }, 6000);
+    let showSnackbarMessage = function (message, pos, type) {
+        Swal.mixin({
+            toast: true,
+            position: pos,
+            showConfirmButton: false,
+            title:message,
+            // icon: type,
+            timer: 3000,
+            timerProgressBar: true,
+          }).fire()
     }
 
     $scope.getWordDefinition = function (word, managed) {
@@ -204,13 +234,19 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
             method: 'GET',
             url: 'https://mlrs.research.um.edu.mt/resources/gabra-api/lexemes/search?s=' + word_to_real(word)
         }).then(function successCallback(response) {
-            resp = response.data.results[0].lexeme.glosses[0].gloss.trim()
+            resp = -1
+            try{
+                resp = response.data.results[0].lexeme.glosses[0].gloss.trim()
+            }catch(error){
+
+            }
             Swal.fire({
                 title: managed ? 'Proset!' : "Ma qtajtx! '" + word_to_real(word) + "' kienet.",
-                text: word_to_real(word) + ' bl-Ingliż tiġi \'' + resp + '\'',
+                text: resp == -1 ?  "" : word_to_real(word) + ' bl-Ingliż tiġi \'' + resp + '\'',
                 icon: 'info',
                 denyButtonText: 'Aqsam ir-riżultat',
                 showDenyButton: true,
+                allowOutsideClick: false,
                 confirmButtonText: 'Ipprova kelma oħra'
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
@@ -218,8 +254,8 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
                     restart(false)
                 } else {
                     get_emoji_string()
-                    navigator.clipboard.writeText(get_emoji_string())
-                    showSnackbarMessage('Ir-riżultat ġie kkupjat fil-clipboard.')
+                    navigator.clipboard.writeText(get_emoji_string(managed))
+                    showSnackbarMessage('Ir-riżultat ġie kkupjat fil-clipboard.', 'bottom', 'info')
                 }
             })
 
@@ -282,6 +318,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
     }
 
     $scope.renderLetter = function (lt) {
+        // console.log(lt)
         if (lt == '/') return 'GĦ'
         else if (lt == '?') return 'IE'
         else return lt.toUpperCase()
@@ -293,6 +330,12 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
         if ($scope.mid_letters.includes(lr)) return "mid"
         else return ""
     }
+
+    $scope.remainder = function(){
+        let a = []
+        for (let i = 0; i < 6-$scope.guess_matrix.length-1; i ++) a.push(i)
+
+        // console.log('returning',a)
+        return a
+    }
 });
-
-
