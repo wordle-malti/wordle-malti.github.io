@@ -1,10 +1,11 @@
 # coding=utf8
 
 # By Michael Pulis / Franco Cassar Manghi
-import json, jsonlines
+import json, jsonlines, re
 
 word_len = 5
 norm_frequency_threshold = 2
+pattern_invalid_chars = re.compile('[^a-zġħżċ]+', re.UNICODE)
 
 relevant_pos = set()
 
@@ -12,6 +13,9 @@ def maltese_to_placeholders(word):
     result = word.replace("għ", "/")
     result = result.replace("ie", "?")
     return result
+
+def has_special_chars(word):
+    return len(pattern_invalid_chars.findall(word)) > 0
 
 def is_wordform_auto_generated(wordform):
     return 'generated' in wordform and wordform['generated'] == True
@@ -44,6 +48,8 @@ with jsonlines.open("wordforms.json") as reader:
         if not has_word(wordform):
             continue
         word = wordform['surface_form'].lower()
+        if has_special_chars(word):
+            continue
         word = maltese_to_placeholders(word)
         actual_length = len(word)
         if actual_length != word_len:

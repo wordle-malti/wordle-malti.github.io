@@ -34,7 +34,10 @@ Biex tiġġenera dizzjunarju ġdid:
 
 1. Iċċekkja li l-URL ġewwa [db/entrypoint.sh](db/entrypoint.sh) huwa ssettjat għall-verżjoni li tixtieq tuża.
 2. Fuq sistema li tisapportja Bash (Mac / Linux), eżegwixxi: `./refresh-dictionary.sh`.
-    * Jekk qed tuża l-Windows biex tiġġenera dan il-file, sempliċiment eżegwixxi l-kmand ta' `docker` li ssib ġewwa [./refresh-dictionary.sh](./refresh-dictionary.sh).
+    * Jekk qed tuża l-Windows biex tiġġenera dan il-file:
+        * Agħmel użu ta' Windows Subsystem for Linux (WSL) u kun ċert li dan il-proġett ġie cloned direttament ġewwa direttorju tal-Linux u mhux Windows (voldieri **mhux** ġo `/mnt/c` iżda x'imkien ieħor). Jaf ukoll jagħti l-każ li jkollok tagħti l-_permission_ `x` _(execute)_ billi tagħmel `chmod +x refresh-dictionary.sh && chmod +x db/entrypoint.sh`, dan minħabba li l-Windows jaf jitlef din l-informazzjoni waqt il-proċess ta' `git clone`.
+        * Ara li għandek `bash` disponibbli fl-_environment_ tiegħek.
+        * Sempliċiment eżegwixxi l-kmand ta' `docker` li ssib ġewwa [./refresh-dictionary.sh](./refresh-dictionary.sh).
 
 Dan il-proċess idum ftit minuti (3-5 minuti), u jirriżulta f'file ġdid jiġi ġġenerat: [docs/dictionary.json](docs/dictionary.json). Minkejja li l-files li qed jiġu pproċessati huma akbar minn 1GB+, dan il-proċess juża biss madwar 35MB RAM, għax il-files qed jiġu streamed. Biex dan ikun effiċjenti, qed jintuża l-prinċipju ta' `jsonlines`. Finalment id-dizzjunarju prodott bħala riżultat, hu kbir biss ~30KB.
 
