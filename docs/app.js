@@ -179,7 +179,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
             word_exists = inputted_word == $scope.expected_result || $scope.dict.indexOf(inputted_word) > -1
 
             if ($scope.submissions_done.has(inputted_word)) {
-                showSnackbarMessage('\''+word_to_real(inputted_word)+'\' diġà ntużat. Prova kelma oħra.', 'top', 'error')
+                showSnackbarMessage('\''+word_to_real(inputted_word)+'\' diġà pprovajtha. Prova kelma oħra.', 'top', 'error')
                 $scope.current_guess = []
             } else if (word_exists) {
                 $scope.guess_matrix.push([...$scope.current_guess])
