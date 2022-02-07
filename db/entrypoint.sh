@@ -33,3 +33,9 @@ python3 vocab-builder.py
 cp dictionary.json /tmp/werdil/docs/dictionary.json
 
 echo "Dictionary populated and stored under docs/dictionary.json."
+
+cp answers.json /tmp/werdil/docs/answers.json
+
+echo "Answers populated and stored under docs/answers.json."
+
+echo "Finished."
