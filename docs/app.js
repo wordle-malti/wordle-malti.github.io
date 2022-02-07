@@ -10,6 +10,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
 
     let w_i = null
     let chosen_w = null
+    $scope.submissions_done = new Set()
     $scope.current_guess = []
     $scope.guess_matrix = []
     $scope.vocab = []
@@ -37,6 +38,7 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
             w_i = Math.floor($scope.vocab.length * Math.random())
         chosen_w = $scope.vocab[w_i]
         $scope.expected_result = chosen_w
+        $scope.submissions_done = new Set()
         $scope.current_guess = []
         $scope.guess_matrix = []
 
@@ -176,7 +178,10 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
             inputted_word = $scope.current_guess.join("")
             word_exists = inputted_word == $scope.expected_result || $scope.dict.indexOf(inputted_word) > -1
 
-            if (word_exists) {
+            if ($scope.submissions_done.has(inputted_word)) {
+                showSnackbarMessage('\''+word_to_real(inputted_word)+'\' diġà ntużat. Prova kelma oħra.', 'top', 'error')
+                $scope.current_guess = []
+            } else if (word_exists) {
                 $scope.guess_matrix.push([...$scope.current_guess])
                 if ($scope.current_guess.join("") == chosen_w) {
                     $scope.active = false
@@ -186,11 +191,11 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
                     $scope.getWordDefinition(chosen_w, false)
                 }
                 $scope.current_guess = []
-            }else{
-                showSnackbarMessage('\''+word_to_real($scope.current_guess.join(""))+'\' mhux fid-dizzjunarju!', 'top', 'error')
+            } else {
+                showSnackbarMessage('\''+word_to_real(inputted_word)+'\' mhux fid-dizzjunarju!', 'top', 'error')
                 $scope.current_guess = []
             }
-            
+            $scope.submissions_done.add(inputted_word)
         }
         reapply()
     }
