@@ -265,9 +265,23 @@ ChangeLogApp.controller('ChangeLogController', function ($http, $scope) {
             })
 
         }, function errorCallback(response) {
-            return "ERRORSWAG"
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
+            Swal.fire({
+                title: managed ? 'Proset!' : "Ma qtajtx! '" + word_to_real(word) + "' kienet.",
+                icon: 'info',
+                denyButtonText: 'Aqsam ir-riżultat',
+                showDenyButton: true,
+                allowOutsideClick: false,
+                confirmButtonText: 'Ipprova kelma oħra'
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    restart(false)
+                } else {
+                    get_emoji_string()
+                    navigator.clipboard.writeText(get_emoji_string(managed))
+                    showSnackbarMessage('Ir-riżultat ġie kkupjat fil-clipboard.', 'bottom', 'info')
+                }
+            })
         });
     }
 
